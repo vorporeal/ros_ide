@@ -23,9 +23,9 @@ class Node
     @x = options?.x ? 0
     @y = options?.y ? 0
     @name = options?.name ? ''
-    @inputs = new Connection(input) for input in options.inputs if options?.inputs? else [] 
-    @outputs = new Connection(output) for output in options.outputs if options?.outputs? else [] 
-    @params = new Param(p) for p in options.params if options?.params? else []
+    @inputs = if options?.inputs? then new Connection(input) for input in options.inputs else [] 
+    @outputs = if options?.outputs? then new Connection(output) for output in options.outputs else [] 
+    @params = if options?.params? then new Param(p) for p in options.params else []
     @exec_name = (options?.launch ? options?.exec) ? ''
     @exec_mode = if options?.launch? then EXEC_ROSLAUNCH else if options?.exec? then EXEC_BINARY else null
     @remap = []
