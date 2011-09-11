@@ -99,7 +99,7 @@ window.channel = (function() {
 	// TODO: thorough testing with dropped connections
 	////////////////////////////////////////////////////////////////////////////////
 
-	var port = 5000;
+	var port = 8080;
 	document.write('<script type="text/javascript" src="http://' + document.location.hostname + ':' + port + '/socket.io/socket.io.js"></script>');
 
 	$(window).load(function() {
