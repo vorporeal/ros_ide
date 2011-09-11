@@ -27,7 +27,7 @@ RawDocument.prototype.addNode = function(node) {
 	this.nodes.push(node);
 	node.createElement();
 
-	channel('project', projectName, 'node', 'add').publish(node.toJSON());
+	channel('project-'+projectName+'-node-add').publish(node.toJSON());
 };
 
 RawDocument.prototype.removeNode = function(node) {
@@ -49,7 +49,7 @@ RawDocument.prototype.removeNode = function(node) {
 	this.nodes.removeOnce(node);
 	node.deleteElement();
 
-	channel('project', projectName, 'node', 'remove').publish({
+	channel('project-'+projectName+'-node-remove').publish({
 		id: node.id
 	});
 };
@@ -60,7 +60,7 @@ RawDocument.prototype.updateNode = function(node, name, value) {
 	// Only send the property that changed, not the whole node
 	var json = { id: node.id };
 	json[name] = value;
-	channel('project', projectName, 'node', 'update').publish(json);
+	channel('project-'+projectName+'-node-update').publish(json);
 };
 
 RawDocument.prototype.setSelection = function(sel) {
@@ -75,7 +75,7 @@ RawDocument.prototype.setSelection = function(sel) {
 
 RawDocument.prototype.addConnection = function(input, output) {
 	input.connectTo(output);
-	channel('project', projectName, 'node', 'connect').publish({
+	channel('project-'+projectName+'-node-connect').publish({
 		input: input.id,
 		output: output.id
 	});
@@ -83,7 +83,7 @@ RawDocument.prototype.addConnection = function(input, output) {
 
 RawDocument.prototype.removeConnection = function(input, output) {
 	input.disconnectFrom(output);
-	channel('project', projectName, 'node', 'disconnect').publish({
+	channel('project-'+projectName+'-node-disconnect').publish({
 		input: input.id,
 		output: output.id
 	});

@@ -2,8 +2,7 @@ window.channel = (function() {
 	var map = {};
 	var socket = null;
 
-	function lookup(names) {
-		var name = JSON.stringify(names);
+	function lookup(name) {
 		if (!map.hasOwnProperty(name)) {
 			map[name] = new Channel();
 		}
@@ -75,10 +74,7 @@ window.channel = (function() {
 		
 		// Send to the server
 		if (socket) {
-			socket.send(JSON.stringify({
-				'channel': this.names,
-				'data': data
-			}));
+			socket.send(JSON.stringify({ 'channel': this.names, 'data': data }));
 		}
 	};
 	
@@ -102,24 +98,23 @@ window.channel = (function() {
 	var port = 8080;
 	document.write('<script type="text/javascript" src="http://' + document.location.hostname + ':' + port + '/socket.io/socket.io.js"></script>');
 
-	$(window).load(function() {
+	$(function() {
 		window.WEB_SOCKET_SWF_LOCATION = 'http://' + document.location.hostname + ':' + port + window.WEB_SOCKET_SWF_LOCATION;
 
-		socket = new io.Socket(document.location.hostname, { 'port': port });
+		socket = new io.connect("http://"+document.location.hostname+":"+port);
 		socket.on('connect', function() {
-			lookup(['server', 'status']).publish({ 'status': 'connected' });
+			lookup('server-status').publish({ 'status': 'connected' });
 		});
 		socket.on('disconnect', function() {
-			lookup(['server', 'status']).publish({ 'status': 'disconnected' });
+			lookup('server-status').publish({ 'status': 'disconnected' });
 		});
 		socket.on('message', function(data) {
 			var json = JSON.parse(data);
 			lookup(json['channel']).publish(json['data']);
 		});
-		socket.connect();
 	});
 
-	return function() {
-		return new Helper(Array.prototype.slice.call(arguments));
+	return function(name) {
+		return new Helper(name);
 	};
 })();

@@ -1,58 +1,105 @@
-nodes = [
-  {
-    name: "iRobot Create Driver",
-    exec: "driver.py",
-    pkg: "irobot_create_2_1",
-    inputs: [
-      { name: "cmd_vel", type: "geometry_msgs/Twist" }
-    ],
-    outputs: [
-      { name: "sensorPacket", type: "irobot_create_2_1/SensorPacket" },
-      { name: "odom", type: "irobot_create_2_1/Odometry" }
-    ],
-    params: [
-      { name: "/brown/irobot_create_2_1/port", type: "string" }
-    ]
-  },
-  {
-    name: "iRobot Line Follower",
-    exec: "line_follower.py",
-    pkg: "line_follower",
-    inputs: [
-      { name: "sensorPacket", type: "irobot_create_2_1/SensorPacket" }
-    ],
-    outputs: [
-      { name: "cmd_vel", type: "geometry_msgs/Twist" }
-    ]
-  },
-  {
-    name: "GStreamer",
-    exec: "gscam",
-    pkg: "gscam",
-    inputs: [],
-    outputs: [
-      { name: "gscam/image_raw", type: "sensor_msgs/Image" }
-    ],
-    params: [
-      { name: "brown/gscam/preroll", type: "int" }
-    ]
-  },
-  {
-    name: "Color Machine Vision",
-    exec: "cmvision.launch",
-    pkg: "cmvision",
-    inputs: [
-      { name: "image", type: "sensor_msgs/Image" }
-    ],
-    outputs: [
-      { name: "blobs", type: "sensor_msgs/Image" }
-    ],
-    params: [
-      { name: "cmvision/color_file", type: "string" },
-      { name: "cmvision/mean_shift_on", type: "bool" },
-      { name: "cmvision/debug_on", type: "bool" },
-      { name: "cmvision/spatial_radius_pix", type: "int" },
-      { name: "cmvision/color_radius_pix", type: "int" }
-    ]
-  }
-]
+{
+  "nodes": [
+    {
+      "inputs": [
+        {
+          "type": "geometry_msgs/Twist", 
+          "name": "cmd_vel"
+        }
+      ], 
+      "params": [
+        {
+          "type": "string", 
+          "name": "/brown/irobot_create_2_1/port"
+        }
+      ], 
+      "name": "iRobot Create Driver", 
+      "exec": "driver.py", 
+      "outputs": [
+        {
+          "type": "irobot_create_2_1/SensorPacket", 
+          "name": "sensorPacket"
+        }, 
+        {
+          "type": "irobot_create_2_1/Odometry", 
+          "name": "odom"
+        }
+      ], 
+      "pkg": "irobot_create_2_1"
+    }, 
+    {
+      "inputs": [
+        {
+          "type": "irobot_create_2_1/SensorPacket", 
+          "name": "sensorPacket"
+        }
+      ], 
+      "exec": "line_follower.py", 
+      "pkg": "line_follower", 
+      "outputs": [
+        {
+          "type": "geometry_msgs/Twist", 
+          "name": "cmd_vel"
+        }
+      ], 
+      "name": "iRobot Line Follower"
+    }, 
+    {
+      "inputs": [], 
+      "params": [
+        {
+          "type": "int", 
+          "name": "brown/gscam/preroll"
+        }
+      ], 
+      "name": "GStreamer", 
+      "exec": "gscam", 
+      "outputs": [
+        {
+          "type": "sensor_msgs/Image", 
+          "name": "gscam/image_raw"
+        }
+      ], 
+      "pkg": "gscam"
+    }, 
+    {
+      "inputs": [
+        {
+          "type": "sensor_msgs/Image", 
+          "name": "image"
+        }
+      ], 
+      "params": [
+        {
+          "type": "string", 
+          "name": "cmvision/color_file"
+        }, 
+        {
+          "type": "bool", 
+          "name": "cmvision/mean_shift_on"
+        }, 
+        {
+          "type": "bool", 
+          "name": "cmvision/debug_on"
+        }, 
+        {
+          "type": "int", 
+          "name": "cmvision/spatial_radius_pix"
+        }, 
+        {
+          "type": "int", 
+          "name": "cmvision/color_radius_pix"
+        }
+      ], 
+      "name": "Color Machine Vision", 
+      "launch": "cmvision.launch", 
+      "outputs": [
+        {
+          "type": "sensor_msgs/Image", 
+          "name": "blobs"
+        }
+      ], 
+      "pkg": "cmvision"
+    }
+  ]
+}

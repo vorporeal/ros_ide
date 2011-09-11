@@ -10,7 +10,9 @@ class Library
     @load()
     
   load: ->
-    require(@library_file_path)
-    @nodes = [ node.Node(n) for n in nodes ]
+    json = JSON.parse(fs.readFileSync(@library_file_path))
+    @nodes = ( new node.Node(n) for n in json['nodes'] )
+    
+  toJSON: -> { 'nodes': ( n.toJSON() for n in @nodes ) }
 
 exports.Library = Library

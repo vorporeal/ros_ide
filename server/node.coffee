@@ -10,7 +10,7 @@ class Connection
     'id': @id
     'type': @type
     'name': @name
-    'connections': JSON.stringify(@connections)
+    'connections': @connections
   
 class Param
 
@@ -34,9 +34,9 @@ class Node
     @x = options?.x ? 0
     @y = options?.y ? 0
     @name = options?.name ? ''
-    @inputs = if options?.inputs? then [new Connection(input) for input in options.inputs] else [] 
-    @outputs = if options?.outputs? then [new Connection(output) for output in options.outputs] else [] 
-    @params = if options?.params? then [new Param(p) for p in options.params] else []
+    @inputs = (new Connection(input) for input in options?.inputs ? [] )
+    @outputs = (new Connection(output) for output in options?.outputs ? [] )
+    @params = (new Param(p) for p in options?.params ? [] )
     @exec_name = (options?.launch ? options?.exec) ? ''
     @exec_mode = if options?.launch? then @EXEC_ROSLAUNCH else if options?.exec? then @EXEC_BINARY else null
     @remap = []
@@ -56,9 +56,9 @@ class Node
       'x': @x
       'y': @y
       'name': @name
-      'inputs': [ i.toJSON() for i in @inputs ]
-      'outputs': [ o.toJSON() for o in @outputs ]
-      'params': [ p.toJSON() for p in @params ]
+      'inputs': ( i.toJSON() for i in @inputs )
+      'outputs': ( o.toJSON() for o in @outputs )
+      'params': ( p.toJSON() for p in @params )
     if @exec_mode == @EXEC_ROSLAUNCH
       d['launch'] = @exec_name 
     else if @exec_mode == @EXEC_BINARY

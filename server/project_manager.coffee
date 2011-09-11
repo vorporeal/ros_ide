@@ -15,9 +15,8 @@ class ProjectManager
       fs.mkdirSync(working_path, 755)
     @workspace_path = working_path
     @library = new l.Library(@workspace_path)
-    @projects = (n for n in fs.readdirSync(@workspace_path) when path.exists(path.join(@workspace_path, n, 'project.json')))
-    console.log p for p in @projects
-    @project_servers = (new ps.ProjectServer({'path': p, 'message_server': @message_server}) for p in @projects)
+    @projects = (n for n in fs.readdirSync(@workspace_path) when path.existsSync(path.join(@workspace_path, n, 'project.json')))
+    @project_servers = (new ps.ProjectServer({'path': path.join(@workspace_path, p), 'message_server': @message_server}) for p in @projects)
     this
     
     
@@ -38,8 +37,8 @@ class ProjectManager
     
     false
     
-  getProjects: -> { 'projects': [{'name': name} for name in @projects] }
+  getProjects: -> { 'projects': ({'name': name} for name in @projects) }
     
-  getLibrary: -> @library
+  getLibrary: -> @library.toJSON()
   
 exports.ProjectManager = ProjectManager

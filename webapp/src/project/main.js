@@ -54,7 +54,7 @@ $(window).load(function() {
 			window.focus();
 		}),
 		new Toolbar.Button('Run', '/static/images/run.png').click(function() {
-			channel('project', projectName, 'deploy', 'run').publish({
+			channel('project-'+projectName+'-deploy-run').publish({
 				ip: robot_ip,
 				user: username,
 				pass: password
@@ -66,11 +66,11 @@ $(window).load(function() {
 			]);
 		}),
 		new Toolbar.Button('Stop', '/static/images/stop.png').click(function() {
-			channel('project', projectName, 'deploy', 'stop').publish({});
+			channel('project-'+projectName+'-deploy-stop').publish({});
 			// deployStatus.hide();
 		})
 	];
-	channel('project', projectName, 'deploy', 'status').subscribe(function(json) {
+	channel('project-'+projectName+'-deploy-status').subscribe(function(json) {
 		totalStatus += text2html('\n' + json['text']);
 		deployStatus.setContents([
 			new HUD.Box(totalStatus)
@@ -152,11 +152,11 @@ $(window).load(function() {
 	]);
 
 	// populate the node library
-	channel('workspace', 'library', 'response').subscribe(function(json) {
+	channel('workspace-library-response').subscribe(function(json) {
 		libraryJSON = json;
 		updateLibrary();
 	});
-	channel('workspace', 'library', 'request').publish({});
+	channel('workspace-library-request').publish({});
 
 	function updateLibrary() {
 		var contents = [];

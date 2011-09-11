@@ -7,7 +7,11 @@ class ProjectServer extends ca.ChannelAgent
   constructor: (args) ->
     super(args.message_server)
     @project = new project.Project(args.path)
-    @subscribe "project-#{@project.name}-nodes-request", => @publish("project-#{@project.name}-nodes-response", @project)
+    console.log "subscribing to  project-#{@project.name}-nodes-request"
+    @subscribe "project-#{@project.name}-nodes-request", => 
+      console.log "nodes for #{@project.name} requested"
+      @publish("project-#{@project.name}-nodes-response", @project.toJSON())
+      
     @subscribe "project-#{@project.name}-nodes-update", (message) => @project.updateNode(message)
     @subscribe "project-#{@project.name}-nodes-add", (message) => @project.addNode(message)
     @subscribe "project-#{@project.name}-nodes-remove", (message) => @project.removeNode(message)

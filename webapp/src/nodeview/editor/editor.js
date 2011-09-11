@@ -201,29 +201,29 @@ Editor.prototype.setProjectName = function(projectName) {
 
 	// subscribe to node updates
 	var this_ = this;
-	var updateChannel = channel('project', projectName, 'node', 'update');
+	var updateChannel = channel('project-'+projectName+'-node-update');
 	updateChannel.subscribe(function(json) {
 		updateChannel.disable();
 		this_.onUpdateNodeMessage(json);
 		updateChannel.enable();
 	});
-	channel('project', projectName, 'node', 'add').subscribe(function(json) {
+	channel('project-'+projectName+'-node-add').subscribe(function(json) {
 		this_.onAddNodeMessage(json);
 	});
-	channel('project', projectName, 'node', 'remove').subscribe(function(json) {
+	channel('project-'+projectName+'-node-remove').subscribe(function(json) {
 		this_.onRemoveNodeMessage(json);
 	});
-	channel('project', projectName, 'node', 'connect').subscribe(function(json) {
+	channel('project-'+projectName+'-node-connect').subscribe(function(json) {
 		this_.onAddConnectionMessage(json);
 	});
-	channel('project', projectName, 'node', 'disconnect').subscribe(function(json) {
+	channel('project-'+projectName+'-node-disconnect').subscribe(function(json) {
 		this_.onRemoveConnectionMessage(json);
 	});
 
 	// poll until we get the node list
 	var this_ = this;
 	this.gotNodes = false;
-	channel('project', projectName, 'nodes', 'response').subscribe(function(json) {
+	channel('project-'+projectName+'-nodes-response').subscribe(function(json) {
 		if (!this_.gotNodes) {
 			this_.onSetNodesMessage(json);
 			this_.gotNodes = true;
@@ -231,6 +231,6 @@ Editor.prototype.setProjectName = function(projectName) {
 		}
 	});
 	var interval = setInterval(function() {
-		channel('project', projectName, 'nodes', 'request').publish({});
+		channel('project-'+projectName+'-nodes-request').publish({});
 	}, 100);
 };

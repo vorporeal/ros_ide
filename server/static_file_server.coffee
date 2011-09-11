@@ -9,7 +9,7 @@ class StaticFileServer
     http.createServer((request, response) ->
       uri = url.parse(request.url).pathname
       uri = "/static/main/index.html" if uri == "/"
-      uri = "/static/#{uri}" if uri.match(/^project/)
+      uri = "/static/project/index.html" if uri.match(/^\/project/)
       filename = path.join("#{process.cwd()}/../webapp/www", uri)
 
       path.exists filename, (exists) ->

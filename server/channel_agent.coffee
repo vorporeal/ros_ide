@@ -11,6 +11,6 @@ class ChannelAgent
     @_server.unsubscribe(this, channel)
     true
 
-  publish: (channel, message) ->  @_server.publish(channel, data, this)
+  publish: (channel, data) ->  @_server.publish(channel, data, this)
   
 exports.ChannelAgent = ChannelAgent

@@ -1,6 +1,6 @@
 path = require 'path'
-fs = require("fs")
-require './node'
+fs = require "fs"
+node = require './node'
 require './utils'
 
 class Project
@@ -32,7 +32,7 @@ class Project
     @save()
     
   removeNode: (json) ->
-    @nodes = [n for n in @nodes when n.id != json['id']]
+    @nodes = (n for n in @nodes when n.id != json['id'])
     @removeInvalidConnections()
     @save()
     
@@ -64,15 +64,15 @@ class Project
     fs.writeFile(@project_file_path, JSON.stringify(this.toJSON()), (err) -> console.log("could not save project") if err )
     
   load: ->
-    json = eval(fs.readFileSync(@project_file_path))
-    @nodes = [ new Node(node) for node in json['nodes'] ]
+    json = JSON.parse(fs.readFileSync(@project_file_path))
+    @nodes = ( new node.Node(n) for n in json['nodes'] )
     @removeInvalidConnections()
     @save()
     
-  removeInvalidConnection: ->
+  removeInvalidConnections: ->
     # TODO: REMOVE Invalid Connections
+    false
     
-  toJSON: ->
-    { 'nodes': [ node.toJSON() for node in @nodes] }
+  toJSON: ->  { 'nodes': ( n.toJSON() for n in @nodes ) }
     
 exports.Project = Project
