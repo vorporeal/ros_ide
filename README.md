@@ -1,5 +1,5 @@
-INPROGRESS Python to Node.js port
-=================================
+IN PROGRESS Python to Node.js port
+==================================
 
 To run the server:
 
@@ -7,12 +7,14 @@ To run the server:
     cd webapp && python build.py release
 
     # run the two servers (static files and dynamic socket.io)
-    cd server && python server.py
+    cd server && coffee server.coffee
 
 Dependencies:
 
     node.js
+		npm
     socket.io
+		coffee-script
     pyyaml
     paramiko (ssh module)
     json module (needs python2.6+)
