@@ -29,7 +29,7 @@ class MessageServer
     
   publish: (channel, data, publishing_agent) ->
     if @map.includes channel
-      @map[channel][agent](message.data) for agent in Object.keys(@map[message.channel]) when agent != publishing_agent
+      @map[channel][agent](data) for agent of @map[channel] when `agent != publishing_agent`
     
     @_send JSON.stringify({'channel': channel, 'data': data})
     this

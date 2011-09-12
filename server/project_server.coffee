@@ -7,16 +7,15 @@ class ProjectServer extends ca.ChannelAgent
   constructor: (args) ->
     super(args.message_server)
     @project = new project.Project(args.path)
-    console.log "subscribing to  project-#{@project.name}-nodes-request"
     @subscribe "project-#{@project.name}-nodes-request", => 
-      console.log "nodes for #{@project.name} requested"
       @publish("project-#{@project.name}-nodes-response", @project.toJSON())
-      
-    @subscribe "project-#{@project.name}-nodes-update", (message) => @project.updateNode(message)
-    @subscribe "project-#{@project.name}-nodes-add", (message) => @project.addNode(message)
-    @subscribe "project-#{@project.name}-nodes-remove", (message) => @project.removeNode(message)
-    @subscribe "project-#{@project.name}-nodes-connect", (message) => @project.addConnection(message)
-    @subscribe "project-#{@project.name}-nodes-disconnect", (message) => @project.removeConnection(message)
+    @subscribe "project-#{@project.name}-node-update", (message) => 
+      @project.updateNode(message)
+      @publish "project-#{@project.name}-node-update", message
+    @subscribe "project-#{@project.name}-node-add", (message) => @project.addNode(message)
+    @subscribe "project-#{@project.name}-node-remove", (message) => @project.removeNode(message)
+    @subscribe "project-#{@project.name}-node-connect", (message) => @project.addConnection(message)
+    @subscribe "project-#{@project.name}-node-disconnect", (message) => @project.removeConnection(message)
     @subscribe "project-#{@project.name}-deploy-run", @run
     @subscribe "project-#{@project.name}-deploy-stop", @stop
     
