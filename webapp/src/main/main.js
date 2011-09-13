@@ -32,7 +32,7 @@ function updateProjectList(projects) {
 	});
 }
 
-$(window).load(function() {
+$(function() {
 	var contents = [
 		new Toolbar.Button('Settings', '/static/images/settings.png').floatRight().setEnabled(false)
 	];
@@ -53,11 +53,11 @@ $(window).load(function() {
 	$(window).resize(resize);
 	resize();
 
-	channel('server', 'status').subscribe(function(data) {
-		channel('workspace', 'list', 'request').publish({});
+	channel('server-status').subscribe(function(data) {
+		channel('workspace-list-request').publish({});
 	});
 
-	channel('workspace', 'list', 'response').subscribe(function(data) {
+	channel('workspace-list-response').subscribe(function(data) {
 		updateProjectList(data.projects);
 	});
 });
