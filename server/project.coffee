@@ -15,13 +15,12 @@ class Project
     @path = p
     @project_file_path = path.join(@path, 'project.json')
     
-  addNode: (node) ->
-    node = new Node(node) unless node.constructor.toString().match('Node')
+  addNode: (new_node) ->
+    new_node = new node.Node(new_node) unless new_node.constructor.toString().match('Node')
     for n in @nodes
-      if n.id == node.id
+      if n.id == new_node.id
         return
-    node.id = @getNextId()
-    @nodes.push(node)
+    @nodes.push(new_node)
     @save()
     
   updateNode: (json) ->
@@ -37,7 +36,7 @@ class Project
     @save()
     
   addConnection: (json) ->
-    [input_id, output_id] = json['input'] json['output']
+    [input_id, output_id] = [json['input'], json['output']]
     for n in @nodes
       for i in n.inputs
         if i.id == input_id and output_id not in i.connections
@@ -49,7 +48,7 @@ class Project
     @save()
     
   removeConnection: (json) ->
-    [input_id, output_id] = json['input'] json['output']
+    [input_id, output_id] = [json['input'], json['output']]
     for n in @nodes
       for i in n.inputs
         if i.id == input_id and output_id in i.connections
