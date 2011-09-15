@@ -40,6 +40,7 @@ class Node
     @exec_name = (options?.launch ? options?.exec) ? ''
     @exec_mode = if options?.launch? then @EXEC_ROSLAUNCH else if options?.exec? then @EXEC_BINARY else null
     @remap = []
+    @pkg = options?.pkg ? ''
     
   update: (values) ->
     if values.x? then @x = values.x
@@ -59,6 +60,7 @@ class Node
       'inputs': ( i.toJSON() for i in @inputs )
       'outputs': ( o.toJSON() for o in @outputs )
       'params': ( p.toJSON() for p in @params )
+      'pkg': @pkg
     if @exec_mode == @EXEC_ROSLAUNCH
       d['launch'] = @exec_name 
     else if @exec_mode == @EXEC_BINARY
