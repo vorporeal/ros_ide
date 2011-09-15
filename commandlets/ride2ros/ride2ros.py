@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+
 from easyxml import EasyXML
-import yaml
+import json
 
 next_ids = {}
 
@@ -8,7 +10,7 @@ def new_name(prefix):
     return prefix + str(next_ids[prefix])
 
 def roslaunch_xml_for_file(path, package_path):
-    data = yaml.safe_load(file(path))
+    data = json.load(file(path))
     xml = EasyXML('launch')
 
     xml.machine(
@@ -60,6 +62,6 @@ def roslaunch_xml_for_file(path, package_path):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) == 2:
-        print roslaunch_xml_for_file('project.yaml', sys.argv[1])
+        print roslaunch_xml_for_file('project.json', sys.argv[1])
     else:
         print 'usage: ride2ros DEPLOY_PATH'
