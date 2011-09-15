@@ -60,7 +60,7 @@ class Project
     @save()
     
   save: ->
-    fs.writeFile(@project_file_path, JSON.stringify(this.toJSON()), (err) -> console.log("could not save project") if err )
+    fs.writeFile(@project_file_path, JSON.stringify(this.toJSON(), null, 4), (err) -> console.log("could not save project") if err )
     
   load: ->
     json = JSON.parse(fs.readFileSync(@project_file_path))
