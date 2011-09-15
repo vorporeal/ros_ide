@@ -1,1 +1,250 @@
-{"nodes":[{"id":"0","x":30,"y":61,"name":"gscam","inputs":[],"outputs":[{"id":"0","type":"","name":"image","connections":["1","3"]}],"params":[],"exec":"gscam"},{"id":"1","x":205,"y":127,"name":"cmvision","inputs":[{"id":"1","type":"","name":"image","connections":["0"]}],"outputs":[{"id":"2","type":"","name":"blobs","connections":["5"]}],"params":[],"launch":"cmvision.launch"},{"id":"2","x":275,"y":30,"name":"ar_recog","inputs":[{"id":"3","type":"","name":"image","connections":["0"]}],"outputs":[{"id":"4","type":"","name":"tags","connections":["7"]}],"params":[],"exec":"ar_recog"},{"id":"3","x":349,"y":245,"name":"merge_blobs","inputs":[{"id":"5","type":"","name":"blob_list","connections":["2"]}],"outputs":[{"id":"6","type":"","name":"blob_list","connections":["7"]}],"params":[]},{"id":"4","x":530,"y":109,"name":"filter_blobs","inputs":[{"id":"7","type":"","name":"blob_list","connections":["6","4"]}],"outputs":[{"id":"8","type":"","name":"orange_over_green","connections":[]},{"id":"9","type":"","name":"green_over_orange","connections":["14"]},{"id":"10","type":"","name":"orange","connections":[]},{"id":"11","type":"","name":"green","connections":["16"]},{"id":"12","type":"","name":"yellow","connections":[]},{"id":"13","type":"","name":"pink","connections":[]}],"params":[]},{"id":"5","x":752,"y":30,"name":"seek_objects","inputs":[{"id":"14","type":"","name":"blob_list","connections":["9"]}],"outputs":[{"id":"15","type":"","name":"twist","connections":["18"]}],"params":[],"exec":"seek_objects.py"},{"id":"6","x":779,"y":213,"name":"avoid_objects","inputs":[{"id":"16","type":"","name":"blob_list","connections":["11"]}],"outputs":[{"id":"17","type":"","name":"twist","connections":["18"]}],"params":[]},{"id":"7","x":981,"y":108,"name":"create_driver","inputs":[{"id":"18","type":"","name":"twist","connections":["15","17"]}],"outputs":[],"params":[],"exec":"driver.py"}]}
+{
+    "nodes": [
+        {
+            "id": "0",
+            "x": 30,
+            "y": 61,
+            "name": "gscam",
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": "0",
+                    "type": "",
+                    "name": "image",
+                    "connections": [
+                        "1",
+                        "3"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": "gscam",
+            "exec": "gscam"
+        },
+        {
+            "id": "1",
+            "x": 205,
+            "y": 127,
+            "name": "cmvision",
+            "inputs": [
+                {
+                    "id": "1",
+                    "type": "",
+                    "name": "image",
+                    "connections": [
+                        "0"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "2",
+                    "type": "",
+                    "name": "blobs",
+                    "connections": [
+                        "5"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": "cmvision",
+            "launch": "cmvision.launch"
+        },
+        {
+            "id": "2",
+            "x": 275,
+            "y": 30,
+            "name": "ar_recog",
+            "inputs": [
+                {
+                    "id": "3",
+                    "type": "",
+                    "name": "image",
+                    "connections": [
+                        "0"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "4",
+                    "type": "",
+                    "name": "tags",
+                    "connections": [
+                        "7"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": "ar_recog",
+            "exec": "ar_recog"
+        },
+        {
+            "id": "3",
+            "x": 349,
+            "y": 245,
+            "name": "merge_blobs",
+            "inputs": [
+                {
+                    "id": "5",
+                    "type": "",
+                    "name": "blob_list",
+                    "connections": [
+                        "2"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "6",
+                    "type": "",
+                    "name": "blob_list",
+                    "connections": [
+                        "7"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": ""
+        },
+        {
+            "id": "4",
+            "x": 530,
+            "y": 109,
+            "name": "filter_blobs",
+            "inputs": [
+                {
+                    "id": "7",
+                    "type": "",
+                    "name": "blob_list",
+                    "connections": [
+                        "6",
+                        "4"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "8",
+                    "type": "",
+                    "name": "orange_over_green",
+                    "connections": []
+                },
+                {
+                    "id": "9",
+                    "type": "",
+                    "name": "green_over_orange",
+                    "connections": [
+                        "14"
+                    ]
+                },
+                {
+                    "id": "10",
+                    "type": "",
+                    "name": "orange",
+                    "connections": []
+                },
+                {
+                    "id": "11",
+                    "type": "",
+                    "name": "green",
+                    "connections": [
+                        "16"
+                    ]
+                },
+                {
+                    "id": "12",
+                    "type": "",
+                    "name": "yellow",
+                    "connections": []
+                },
+                {
+                    "id": "13",
+                    "type": "",
+                    "name": "pink",
+                    "connections": []
+                }
+            ],
+            "params": [],
+            "pkg": ""
+        },
+        {
+            "id": "5",
+            "x": 752,
+            "y": 30,
+            "name": "seek_objects",
+            "inputs": [
+                {
+                    "id": "14",
+                    "type": "",
+                    "name": "blob_list",
+                    "connections": [
+                        "9"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "15",
+                    "type": "",
+                    "name": "twist",
+                    "connections": [
+                        "18"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": "",
+            "exec": "seek_objects.py"
+        },
+        {
+            "id": "6",
+            "x": 779,
+            "y": 213,
+            "name": "avoid_objects",
+            "inputs": [
+                {
+                    "id": "16",
+                    "type": "",
+                    "name": "blob_list",
+                    "connections": [
+                        "11"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "17",
+                    "type": "",
+                    "name": "twist",
+                    "connections": [
+                        "18"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": ""
+        },
+        {
+            "id": "7",
+            "x": 981,
+            "y": 108,
+            "name": "create_driver",
+            "inputs": [
+                {
+                    "id": "18",
+                    "type": "",
+                    "name": "twist",
+                    "connections": [
+                        "15",
+                        "17"
+                    ]
+                }
+            ],
+            "outputs": [],
+            "params": [],
+            "pkg": "irobot_create_2_1",
+            "exec": "driver.py"
+        }
+    ]
+}

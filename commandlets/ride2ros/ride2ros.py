@@ -61,7 +61,7 @@ def roslaunch_xml_for_file(path, package_path):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) == 2:
-        print roslaunch_xml_for_file('project.json', sys.argv[1])
+    if len(sys.argv) == 3:
+        print roslaunch_xml_for_file(sys.argv[1], sys.argv[2])
     else:
-        print 'usage: ride2ros DEPLOY_PATH'
+        print 'usage: ride2ros PROJECT_FILE_PATH DEPLOY_PATH'

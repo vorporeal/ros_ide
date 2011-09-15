@@ -1,1 +1,74 @@
-{"nodes":[{"id":"9100070830900222","x":176,"y":78,"name":"iRobot Create Driver","inputs":[{"id":"06748916977085173","type":"","name":"cmd_vel","connections":["0622973358258605"]}],"outputs":[{"id":"973145708674565","type":"","name":"sensorPacket","connections":["011877913493663073"]},{"id":"2182355155237019","type":"","name":"odom","connections":[]}],"params":[{"name":"/brown/irobot_create_2_1/port","type":"string","value":"string"}],"exec":"driver.py"},{"id":"3382358932867646","x":159,"y":239,"name":"iRobot Line Follower","inputs":[{"id":"011877913493663073","type":"","name":"sensorPacket","connections":["973145708674565"]}],"outputs":[{"id":"0622973358258605","type":"","name":"cmd_vel","connections":["06748916977085173"]}],"params":[],"exec":"line_follower.py"}]}
+{
+    "nodes": [
+        {
+            "id": "9100070830900222",
+            "x": 176,
+            "y": 78,
+            "name": "iRobot Create Driver",
+            "inputs": [
+                {
+                    "id": "06748916977085173",
+                    "type": "",
+                    "name": "cmd_vel",
+                    "connections": [
+                        "0622973358258605"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "973145708674565",
+                    "type": "",
+                    "name": "sensorPacket",
+                    "connections": [
+                        "011877913493663073"
+                    ]
+                },
+                {
+                    "id": "2182355155237019",
+                    "type": "",
+                    "name": "odom",
+                    "connections": []
+                }
+            ],
+            "params": [
+                {
+                    "name": "/brown/irobot_create_2_1/port",
+                    "type": "string",
+                    "value": "string"
+                }
+            ],
+            "pkg": "irobot_create_2_1",
+            "exec": "driver.py"
+        },
+        {
+            "id": "3382358932867646",
+            "x": 159,
+            "y": 239,
+            "name": "iRobot Line Follower",
+            "inputs": [
+                {
+                    "id": "011877913493663073",
+                    "type": "",
+                    "name": "sensorPacket",
+                    "connections": [
+                        "973145708674565"
+                    ]
+                }
+            ],
+            "outputs": [
+                {
+                    "id": "0622973358258605",
+                    "type": "",
+                    "name": "cmd_vel",
+                    "connections": [
+                        "06748916977085173"
+                    ]
+                }
+            ],
+            "params": [],
+            "pkg": "line_follower",
+            "exec": "line_follower.py"
+        }
+    ]
+}
