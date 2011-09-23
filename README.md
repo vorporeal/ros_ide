@@ -1,21 +1,11 @@
-IN PROGRESS Python to Node.js port
+In progress: Python to Node.js port
 ==================================
 
-To run the server:
+Dependencies:  
+* python 2.6+  
+* node.js  
+* npm  
 
-	# compile the javascript for the webapp
-	cd webapp && python build.py release
+Build the webapp using: `npm install`
 
-	# run the two servers (static files and dynamic socket.io)
-	cd server && coffee server.coffee
-	or
-	cd server && node run.js
-
-Dependencies:
-	node.js
-	npm
-	socket.io
-	coffee-script
-	pyyaml
-	paramiko (ssh module)
-	json module (needs python2.6+)
+Run the server using: `npm start`
