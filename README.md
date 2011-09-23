@@ -5,6 +5,7 @@ Dependencies:
 * python 2.6+  
 * node.js  
 * npm  
+* ros  
 
 Build the webapp using: `npm install`
 
