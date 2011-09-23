@@ -40,12 +40,13 @@ if __name__ == '__main__':
 
     # Grab the pub/sub/srv information from the nodes (along with type info),
     # put it in a nice structure, and print a JSON-formatted version.
-    data = {}
+    data = {'nodes': []}
     for n in nodes:
-        pubs = [(t, topic_type(t, pub_topics)) for t, l in state[0] if n in l]
-        subs = [(t, topic_type(t, pub_topics)) for t, l in state[1] if n in l]
-        srvs = [(t, topic_type(t, pub_topics)) for t, l in state[2] if n in l]  
+        name = n.rsplit('/', 1)[1]
+
+        outputs = [{'name': t.rsplit('/', 1)[1], 'id': t, 'type': topic_type(t, pub_topics), 'connections': []} for t, l in state[0] + state[2] if n in l]
+        inputs = [{'name': t.rsplit('/', 1)[1], 'id': t, 'type': topic_type(t, pub_topics), 'connections': []} for t, l in state[1] if n in l]
         
-        data[n] = {'pubs':pubs, 'subs':subs, 'srvs':srvs}
+        data['nodes'].append({'name':name, 'id':n, 'outputs':outputs, 'inputs':inputs})
 
     print(json.dumps(data))

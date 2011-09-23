@@ -6,6 +6,7 @@ function updateProjectList(projects) {
 	names.sort();
 	
 	html += '<div class="mac-button newproject">Create a new project</div>';
+    html += '<div class="mac-button introspect">Load running project</div>';
 	html += '<h2>Projects:</h2>';
 	for (var i = 0; i < names.length; i++) {
 		var name = names[i];
@@ -21,15 +22,21 @@ function updateProjectList(projects) {
 		if (name !== null) {
 			name = $.trim(name);
 			if (/^\w+$/.test(name)) {
-				channel('workspace', 'list', 'add').publish({
+				channel('workspace-list-add').publish({
 					name: name
 				});
-				channel('workspace', 'list', 'request').publish({});
+				channel('workspace-list-request').publish({});
 			} else {
 				window.alert('The name "' + name + '" is invalid');
 			}
 		}
 	});
+    $('.introspect').live('click', function() {
+        channel('introspect-nodes-resp').subscribe(function () {
+            window.location = '/project/introspect/';
+        });
+        channel('introspect-nodes').publish();
+    });
 }
 
 $(function() {
@@ -38,7 +45,7 @@ $(function() {
 	];
 
 	$('.project-link').live('click', function() {
-		window.open('/project/' + this.innerHTML + '/');
+		window.location = '/project/' + this.innerHTML + '/';
 	});
 	$('.mac-button').live('mousedown', function(e) {
 		e.preventDefault();

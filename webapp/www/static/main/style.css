@@ -50,6 +50,10 @@ a { color: inherit; }
 	float: right;
 }
 
+.introspect {
+    float: right;
+}
+
 .projects h2 {
 	margin: 0 0 15px 0;
 }
