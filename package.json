@@ -1,0 +1,21 @@
+{ "name":"RIDE"
+, "version": "0.1.0-alpha1"
+, "description": "A web-based, visual development environment for ROS."
+, "contributors":
+  [ "David Stern <vorporeal@gmail.com>"
+  , "Kayle Gishen <kaylegishen@gmail.com>"
+  ]
+, "repository":
+  { "type": "git"
+  , "url": "git://github.com/vorporeal/ros_ide.git"
+  }
+, "dependencies":
+  { "socket.io": "*"
+  , "coffee-script": "*"
+  }
+, "scripts":
+  { "preinstall": "cd webapp; python build.py release"
+  , "start": "cd server; node run.js"
+  }
+, "private": true
+}
