@@ -5,15 +5,8 @@ import socket
 import json
 
 from ros import rosnode
-import roslib.scriptutil as scriptutil
-
-# A simple function to check for errors in calls to master and 
-# either error out or return the appropriate value.
-def _succeed(args):
-    code, msg, val = args
-    if code != 1:
-        raise rosnode.ROSNodeException("remote call failed: %s"%msg)
-    return val
+from ros import rosgraph
+from rosgraph import masterapi
 
 # Get the type of a given topic.
 def topic_type(t, pub_topics):
@@ -26,15 +19,15 @@ if __name__ == '__main__':
     # Get the names of the running nodes.
     nodes = rosnode.get_node_names()
 
-    # Get a reference to the master ROS node.
-    master = scriptutil.get_master()
+    # Get a reference to the ROS master.
+    master = masterapi.Master('/ride_introspect')
 
     # Get the "node state" of the system.
     state = None
     pub_topics = None
     try:
-        state = _succeed(master.getSystemState('/rosnode'))
-        pub_topics = _succeed(scriptutil.get_master().getPublishedTopics('/rosnode', '/'))
+        state = master.getSystemState()
+        pub_topics = master.getPublishedTopics('')
     except socket.error:
         raise ROSNodeIOException("Unable to communicate with master!")
 
