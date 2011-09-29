@@ -4,3 +4,4 @@
 *.swp
 generated.js
 node_modules
+workspace/introspect
