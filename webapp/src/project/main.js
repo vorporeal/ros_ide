@@ -53,22 +53,9 @@ $(window).load(function() {
 			else library.show();
 			window.focus();
 		}),
-		new Toolbar.Button('Run', '/static/images/run.png').click(function() {
-			channel('project-'+projectName+'-deploy-run').publish({
-				ip: robot_ip,
-				user: username,
-				pass: password
-			});
-			deployStatus.show();
-			totalStatus = 'Loading...';
-			deployStatus.setContents([
-				new HUD.Box(totalStatus)
-			]);
-		}),
-		new Toolbar.Button('Stop', '/static/images/stop.png').click(function() {
-			channel('project-'+projectName+'-deploy-stop').publish({});
-			// deployStatus.hide();
-		})
+        new Toolbar.Button('Save', '/static/images/save.png').click(function() {
+            channel('project-'+projectName+'-save').publish({});
+        })
 	];
 	channel('project-'+projectName+'-deploy-status').subscribe(function(json) {
 		totalStatus += text2html('\n' + json['text']);
