@@ -22,7 +22,7 @@ def roslaunch_xml_for_file(path, package_path):
 
     # re-assign names to make sure they are valid and unique
     for node in data['nodes']:
-        node['name'] = new_name('node')
+        node['name'] = new_name(node['name'])
 
     # remap topic names too
     id_to_input = {}
