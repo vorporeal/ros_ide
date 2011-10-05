@@ -18,7 +18,7 @@ master = None
 def _succeed(args):
     code, msg, val = args
     if code != 1:
-        raise ROSNodeException("remote call failed: %s"%msg)
+        raise rosnode.ROSNodeException("remote call failed: %s"%msg)
     return val
 
 # Get the type of a given topic.
@@ -29,11 +29,20 @@ def topic_type(t):
         return None
 
 def uri_to_exec_info(node):
-    node_rpc = xmlrpclib.ServerProxy(master.lookupNode(node))
-    pid = _succeed(node_rpc.getPid(''))
+    node_uri = master.lookupNode(node)
+    node_rpc = xmlrpclib.ServerProxy(node_uri)
+    try:
+    	pid = _succeed(node_rpc.getPid(node))
+    except:
+        return None
 
     command, err = subprocess.Popen(['ps', '-o', 'command=', str(pid)], stdout=subprocess.PIPE).communicate()
-    command = command.split(' ')[0]
+    
+    command = command.split()
+    cmd_index = 0
+    if command[0].endswith('python'):
+        cmd_index = 1
+    command = command[cmd_index]
 
     path, exe = command.rsplit('/', 1)
 
@@ -75,13 +84,18 @@ if __name__ == '__main__':
         outputs = [topic_data(t) for t, l in state[0] + state[2] if n in l]
         inputs = [topic_data(t) for t, l in state[1] if n in l]
         
-        data['nodes'].append({'name':name \
-                             ,'id':n \
-                             ,'outputs':outputs \
-                             ,'inputs':inputs \
-                             ,'x': 0 \
-                             ,'y': 0 \
-                             })
-        data['nodes'][-1].update(uri_to_exec_info(n))
+        toadd = {'name':name \
+                ,'id':n \
+                ,'outputs':outputs \
+                ,'inputs':inputs \
+                ,'x': 0 \
+                ,'y': 0 \
+                }
+        exec_info = uri_to_exec_info(n)
+        if exec_info == None:
+            continue
+        toadd.update(uri_to_exec_info(n))
+
+        data['nodes'].append(toadd)
 
     print(json.dumps(data))
