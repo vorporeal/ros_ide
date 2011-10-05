@@ -32,7 +32,9 @@ def uri_to_exec_info(node):
     node_rpc = xmlrpclib.ServerProxy(master.lookupNode(node))
     pid = _succeed(node_rpc.getPid(''))
 
-    command = subprocess.check_output(['ps', '-o', 'command=', str(pid)]).split(' ')[0]
+    command, err = subprocess.Popen(['ps', '-o', 'command=', str(pid)], stdout=subprocess.PIPE).communicate()
+    command = command.split(' ')[0]
+
     path, exe = command.rsplit('/', 1)
 
     pkg_path = path
