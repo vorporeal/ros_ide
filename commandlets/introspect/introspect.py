@@ -52,17 +52,17 @@ def uri_to_exec_info(pid):
     return {'pkg': pkg_path.rsplit('/', 1)[1], 'exec': exe}
 
 # Generate the data structure representing a topic.
-def topic_data(t, in_out, node_uri):
+def topic_data(t, in_out, node_rpc_uri):
     ret = {}
     ret['name'] = t.rsplit('/', 1)[1]
-    ret['id'] = '--topic--' + t + '_' + in_out[0]
+    ret['id'] = '--topic--' + rpc_to_node[str(node_rpc_uri)] + t + '_' + in_out[0]
     ret['type'] = topic_type(t)
     ret['connections'] = []
 
-    bus_info = _succeed(xmlrpclib.ServerProxy(node_uri).getBusInfo(_ID))
+    bus_info = _succeed(xmlrpclib.ServerProxy(node_rpc_uri).getBusInfo(_ID))
     for conn in bus_info:
         if conn[4] == t:
-            ret['connections'].append(t + '_' + in_out[1])
+            ret['connections'].append('--topic--' + rpc_to_node.get(str(conn[1]), str(conn[1])) + t + '_' + in_out[1])
 
     return ret
 
@@ -89,8 +89,8 @@ if __name__ == '__main__':
     data = {'nodes': []}
     for n in nodes:
         # Get an RPC proxy through which we can query the node.
-        node_uri = master.lookupNode(n)
-        node_rpc = xmlrpclib.ServerProxy(node_uri)
+        node_rpc_uri = master.lookupNode(n)
+        node_rpc = xmlrpclib.ServerProxy(node_rpc_uri)
         # Wrap this in a try block in case we get strange issues with a node
         # not having a process ID.
         try:
@@ -104,8 +104,8 @@ if __name__ == '__main__':
             # Generate the per-topic structures for the node.
             # NOTE: Outputs no longer includes services, as they really should
             #       be treated separately from published topics.
-            outputs = [topic_data(t, ('out', 'in'), node_uri) for t, l in state[0] if n in l]
-            inputs = [topic_data(t, ('in', 'out'), node_uri) for t, l in state[1] if n in l]
+            outputs = [topic_data(t, ('out', 'in'), node_rpc_uri) for t, l in state[0] if n in l]
+            inputs = [topic_data(t, ('in', 'out'), node_rpc_uri) for t, l in state[1] if n in l]
 
             # Add all of this info to the node's data structure.
             toadd.update({'name':name \
