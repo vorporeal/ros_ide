@@ -72,6 +72,6 @@ class Project
     # TODO: REMOVE Invalid Connections
     false
     
-  toJSON: ->  { 'nodes': ( n.toJSON() for n in @nodes ) }
+  toJSON: -> { 'nodes': ( n.toJSON() for n in @nodes ) }
     
 exports.Project = Project

@@ -28,7 +28,7 @@ class ProjectManager
       project_path = path.join(@workspace_path, name)
       try
         fs.mkdirSync(project_path, 0755)
-      fs.writeFileSync(path.join(project_path, 'project.json'), '{\n"nodes": []\n}')
+      fs.writeFileSync(path.join(project_path, 'project.json'), '{"nodes": []}')
       @projects.push name
       @project_servers.push new ps.ProjectServer({'path': project_path, 'message_server': @message_server})
       true

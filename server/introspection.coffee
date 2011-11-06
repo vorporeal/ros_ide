@@ -12,14 +12,13 @@ class Introspection extends ca.ChannelAgent
 
   get_nodes: ->
     exec '../commandlets/introspect/introspect.py', [], (error, stdout, stderr) =>
-      if !error?
-        @pm.addProject('introspect')
-
-        project_path = path.join(@pm.workspace_path, 'introspect/project.json')
-        fs.writeFileSync(project_path, stdout)
-        ps.project.load() for ps in @pm.project_servers when ps.project.name == 'introspect'
-        @layout_nodes(ps.project.nodes) for ps in @pm.project_servers when ps.project.name == 'introspect'
-        @publish('introspect-nodes-resp', {''})
+         if !error?
+            @pm.addProject('introspect')
+            project_path = path.join(@pm.workspace_path, 'introspect/project.json')
+            fs.writeFileSync(project_path, stdout)
+            ps.project.load() for ps in @pm.project_servers when ps.project.name == 'introspect'
+            @layout_nodes(ps.project.nodes) for ps in @pm.project_servers when ps.project.name == 'introspect'
+            @publish('introspect-nodes-resp', {''})
 
   layout_nodes: (nodes) ->
     n._velx = 0 for n in nodes
@@ -46,13 +45,13 @@ class Introspection extends ca.ChannelAgent
           _nfx += 0.06 * (other_node.x - this_node.x)
           _nfy += 0.06 * (other_node.y - this_node.y)
           if other_node.x > this_node.x
-            [other_node.x, this_node.x] = [this_node.x, other_node.x]
+            [other_node.x, this_node.x] = [this_node.x, other_node.x + 400]
 
         for other_node in connections[this_node.id].out when other_node.id != this_node.id
           _nfx += 0.06 * (other_node.x - this_node.x)
           _nfy += 0.06 * (other_node.y - this_node.y)
           if other_node.x < this_node.x
-            [other_node.x, this_node.x] = [this_node.x, other_node.x]
+            [other_node.x, this_node.x] = [this_node.x, other_node.x - 400]
 
         this_node._velx = (this_node._velx + _nfx) * 0.85
         this_node._vely = (this_node._vely + _nfy) * 0.85
@@ -61,8 +60,8 @@ class Introspection extends ca.ChannelAgent
         n.x += n._velx
         n.y += n._vely
 
-    min_x = 0
-    min_y = 0
+    min_x = Infinity
+    min_y = Infinity
     for n in nodes
       min_x = Math.min(min_x, n.x)
       min_y = Math.min(min_y, n.y)

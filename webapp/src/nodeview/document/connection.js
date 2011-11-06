@@ -26,6 +26,11 @@ Connection.prototype.toJSON = function() {
 };
 
 Connection.prototype.connectTo = function(other) {
+  if(!other)
+  {
+    console.log("Attempted to connect to undefined node");
+    return;
+  }
 	this.connections.addOnce(other);
 	other.connections.addOnce(this);
 };
