@@ -76,20 +76,20 @@ $(window).load(function() {
 	resize();
 
 	// create the node library
-	var library = new HUD(document.body, 'Node Library');
+	var library = new Library(document.body, 'Node Library');
 	var libraryJSON = { nodes: [] };
 	library.setButtons([
-		new HUD.DefaultButton('Insert', function() {
+		new Library.DefaultButton('Insert', function() {
 			library.hide();
 			var json = libraryJSON.nodes[library.selectionIndex];
 			json.x = 100;
 			json.y = 100;
 			editor.insertNodeFromLibrary(json);
 		}),
-		new HUD.Button('New Node', function() {
+		new Library.Button('New Node', function() {
 			newNode.show();
 		}),
-		new HUD.Button('Cancel', function() {
+		new Library.Button('Cancel', function() {
 			library.hide();
 		})
 	]);
@@ -151,7 +151,7 @@ $(window).load(function() {
 			var node = libraryJSON.nodes[i];
 			var name = node.name;
 			var path = node.pkg + '/' + (node.exec || node.launch);
-			contents.push(new HUD.Row('<div class="name">' + name + '</div><div class="path">' + path + '</div>'));
+			contents.push(new Library.Row('<div class="name">' + name + '</div><div class="path">' + path + '</div>'));
 		}
 		library.setContents(contents);
 	}

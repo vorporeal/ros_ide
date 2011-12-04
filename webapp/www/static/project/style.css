@@ -53,3 +53,13 @@ body {
 	right: 0;
 	bottom: 0;
 }
+
+.search {
+    color: #000000;
+}
+
+.search.empty {
+    color: #666666;
+}
+
+
