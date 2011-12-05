@@ -10,10 +10,26 @@ javascripts:
   workspace:
     - public/lib/js/underscore.min.js
     - public/lib/js/jquery-1.7.1.min.js
-    - public/lib/js/*.js
-    - app/views/jst/*.jst
-    - public/util/*/*.js
+    - public/lib/js/backbone.min.js
+    - public/lib/js/humane.min.js
+    - app/views/jst/workspace.jst
+    - public/util/views/workspace.js
+    
+  project:
+    - public/lib/js/underscore.min.js
+    - public/lib/js/jquery-1.7.1.min.js
+    - public/lib/js/backbone.min.js
+    - public/lib/js/mac-hud.js
+    - public/lib/js/mac-toolbar.js
+    - public/lib/js/project.js
 
 stylesheets:
   workspace:
-    - public/lib/css/*.css
+    - public/lib/css/workspace.css
+    - public/lib/css/mac-hud.css
+    - public/lib/css/humane-jackedup.css
+    
+  project:
+    - public/lib/css/project.css
+    - public/lib/css/mac-hud.css
+    - public/lib/css/mac-toolbar.css
