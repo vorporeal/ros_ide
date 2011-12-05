@@ -8,9 +8,11 @@ class StaticFileServer
   constructor: (port = 8000) ->
     http.createServer((request, response) ->
       uri = url.parse(request.url).pathname
-      uri = "/static/main/index.html" if uri == "/"
+      uri = "/index.html" if uri == "/"
       uri = "/static/project/index.html" if uri.match(/^\/project/)
-      filename = path.join("#{process.cwd()}/../webapp/www", uri)
+      console.log(uri)
+      filename = path.join("#{process.cwd()}/../webapp/public", uri)
+      console.log(filename)
 
       path.exists filename, (exists) ->
         if !exists

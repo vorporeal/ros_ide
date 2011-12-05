@@ -12,7 +12,7 @@ class RIDE.WorkspaceView extends Backbone.View
   events: 
     "click .newproject": "newProject"
     "click .project-link": "openProject"
-    "click .ntrospect": "introspectProject"
+    "click .introspect": "introspectProject"
 
   initialize: ->
     RIDE.Projects = new RIDE.ProjectsCollection
