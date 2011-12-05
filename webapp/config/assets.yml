@@ -12,7 +12,7 @@ javascripts:
     - public/lib/js/jquery-1.7.1.min.js
     - public/lib/js/*.js
     - app/views/jst/*.jst
-    - public/util/*.js
+    - public/util/*/*.js
 
 stylesheets:
   workspace:
