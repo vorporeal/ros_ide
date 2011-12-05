@@ -7,16 +7,33 @@ $(window).load(function() {
 	var projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
 	editor.setProjectName(projectName);
 
+    // Put project name in navigation bar.
+    $('.secondary-nav').append("<li><a>" + projectName + "</a></li>");
+
     // Set up the library modal dialog.
     $('#library-modal').modal({backdrop: true, keyboard: true});
+
+    // SET UP EVENTS
+    ////////////////
 
     // Make the library close when "Cancel" is clicked.
     $('#library-cancel-btn').click(function() {
         $('#library-modal').modal('hide');
     });
 
-    // Put project name in navigation bar.
-    $('.secondary-nav').append("<li><a>" + projectName + "</a></li>");
+    // Process events related to "saving" the project (ride2ros).
+    channel('project-' + projectName + '-save-status').subscribe(function(err) {
+        if(err)
+            humane.error(err);
+        else
+            humane.success('roslaunch file created successfully!');
+        humane.forceNew = false;
+    });
+    $('#nav-save-btn').click(function() {
+        humane.forceNew = true;
+        humane.log('saving...');
+        channel('project-' + projectName + '-save').publish({});
+    });
 });
 
 // Old project javascript code, shouldn't need much (if any) of this anymore.
