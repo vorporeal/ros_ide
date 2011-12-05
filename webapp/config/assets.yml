@@ -7,29 +7,30 @@ package_path:           packages    # (defaults to assets)
 javascript_compressor:  uglifier     # (yui, closure)
 
 javascripts:
-  workspace:
+  common:
     - public/lib/js/underscore.min.js
     - public/lib/js/jquery-1.7.1.min.js
     - public/lib/js/backbone.min.js
     - public/lib/js/humane.min.js
+    - public/lib/js/channel.js
+    
+  workspace:
     - app/views/jst/workspace.jst
     - public/util/views/workspace.js
     
   project:
-    - public/lib/js/underscore.min.js
-    - public/lib/js/jquery-1.7.1.min.js
-    - public/lib/js/backbone.min.js
     - public/lib/js/mac-hud.js
     - public/lib/js/mac-toolbar.js
     - public/lib/js/project.js
 
 stylesheets:
-  workspace:
-    - public/lib/css/workspace.css
+  common:
     - public/lib/css/mac-hud.css
     - public/lib/css/humane-jackedup.css
-    
+  
+  workspace:
+    - public/lib/css/workspace.css
+
   project:
     - public/lib/css/project.css
-    - public/lib/css/mac-hud.css
     - public/lib/css/mac-toolbar.css
