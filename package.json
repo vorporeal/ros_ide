@@ -14,7 +14,7 @@
   , "coffee-script": "*"
   }
 , "scripts":
-  { "preinstall": "cd webapp; python build.py release"
+  { "preinstall": "cd webapp; coffee -c -o public/util/ app/; jammit --base-url 'localhost:8000'"
   , "start": "cd server; node run.js"
   }
 , "private": true
