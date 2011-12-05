@@ -2,10 +2,6 @@ function text2html(text) {
 	return ('' + text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>').replace(/  /g, '&nbsp; ');
 }
 
-var robot_ip = '10.0.0.1';
-var username = 'obot';
-var password = 'obot';
-
 $(window).load(function() {
 	var editor = $('iframe')[0].contentWindow.editor;
 	$('iframe').focus();
@@ -23,31 +19,8 @@ $(window).load(function() {
 	]);
 	var totalStatus = '';
 
-	var settings = new HUD(document.body, 'Settings');
-	settings.setContents([
-		new HUD.Textbox('Robot IP address', robot_ip, function(textbox) {
-			robot_ip = textbox.text;
-		}),
-		new HUD.Textbox('Username', username, function(textbox) {
-			username = textbox.text;
-		}),
-		new HUD.Textbox('Password', password, function(textbox) {
-			password = textbox.text;
-		}),
-		new HUD.Box('Note: password is currently sent unencrypted!')
-	]);
-	settings.setButtons([
-		new HUD.DefaultButton('Close', function() {
-			settings.hide();
-		})
-	]);
-
 	// create the toolbar buttons
 	var contents = [
-		new Toolbar.Button('Settings', '/images/settings.png').floatRight().click(function() {
-			settings.show();
-			window.focus();
-		}),
 		new Toolbar.Button('Insert ROS Node', '/images/rosnode.png').click(function() {
 			if (library.isVisible()) library.hide();
 			else library.show();

@@ -26,7 +26,21 @@ javascripts:
 
   nodeview:
     - public/lib/js/mac-popup.js
-    - public/lib/js/nodeview.js
+    - public/util/utils/utils.js
+    - public/util/utils/undo_stack.js
+    - public/util/tools/*.js
+    - public/util/models/rect.js
+    - public/util/models/connection.js
+    - public/util/models/node.js
+    - public/util/models/node_collection.js
+    - public/util/models/document.js
+    - public/util/views/node_view.js
+    - public/util/views/connection_view.js
+    - public/util/views/editor_view.js
+    - app/views/jst/node.jst
+    - app/views/jst/connection.jst
+    - public/util/utils/nodeview_setup.js
+    
 
 stylesheets:
   common:
