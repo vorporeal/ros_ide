@@ -1,3 +1,44 @@
+$(window).load(function() {
+    // Get the editor component from the iframe.
+    var editor = $('iframe')[0].contentWindow.editor;
+    $('iframe').focus();
+
+	// Tell the editor which project to load.
+	var projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
+	editor.setProjectName(projectName);
+
+    // Put project name in navigation bar.
+    $('.secondary-nav').append("<li><a>" + projectName + "</a></li>");
+
+    // Set up the library modal dialog.
+    $('#library-modal').modal({backdrop: true, keyboard: true});
+
+    // SET UP EVENTS
+    ////////////////
+
+    // Make the library close when "Cancel" is clicked.
+    $('#library-cancel-btn').click(function() {
+        $('#library-modal').modal('hide');
+    });
+
+    // Process events related to "saving" the project (ride2ros).
+    channel('project-' + projectName + '-save-status').subscribe(function(err) {
+        if(err)
+            humane.error(err);
+        else
+            humane.success('roslaunch file created successfully!');
+        humane.forceNew = false;
+    });
+    $('#nav-save-btn').click(function() {
+        humane.forceNew = true;
+        humane.log('saving...');
+        channel('project-' + projectName + '-save').publish({});
+    });
+});
+
+// Old project javascript code, shouldn't need much (if any) of this anymore.
+/**
+
 function text2html(text) {
 	return ('' + text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>').replace(/  /g, '&nbsp; ');
 }
@@ -96,10 +137,10 @@ $(window).load(function() {
 				name: newNodeName,
 				exec: newNodeExecutable,
 				pkg: newNodePackage,
-				inputs: newNodeInputs.split(/\s*,\s*/).map(function(name) {
+				inputs: newNodeInputs.split(/\s*,\s* /).map(function(name) {
 					return { name: name };
 				}),
-				outputs: newNodeOutputs.split(/\s*,\s*/).map(function(name) {
+				outputs: newNodeOutputs.split(/\s*,\s* /).map(function(name) {
 					return { name: name };
 				})
 			});
@@ -129,3 +170,5 @@ $(window).load(function() {
 		library.setContents(contents);
 	}
 });
+
+**/

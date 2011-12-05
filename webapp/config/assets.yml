@@ -14,6 +14,10 @@ javascripts:
     - public/lib/js/humane.min.js
     - public/lib/js/channel.js
     
+  bootstrap:
+    - public/lib/js/bootstrap/bootstrap-twipsy.js
+    - public/lib/js/bootstrap/*
+
   workspace:
     - app/views/jst/workspace.jst
     - public/util/views/workspace.js
@@ -47,6 +51,9 @@ stylesheets:
     - public/lib/css/mac-hud.css
     - public/lib/css/mac-button.css
     - public/lib/css/humane-jackedup.css
+
+  bootstrap:
+    - public/lib/css/bootstrap.min.css
   
   workspace:
     - public/lib/css/workspace.css
