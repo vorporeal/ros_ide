@@ -8,4 +8,4 @@ node_modules
 
 workspace/introspect
 
-webapp/public/util
+webapp/public/util/*

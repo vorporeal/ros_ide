@@ -14,13 +14,15 @@ class RIDE.ProjectView extends Backbone.View
     this
 
 class RIDE.WorkspaceView extends Backbone.View
+  
+  el: $('#workspace')
+  
   events: 
     "click .newproject": "newProject"
     "click .introspect": "introspectProject"
 
   initialize: ->
     @template = JST.workspace 
-    @el = $('#workspace')
     RIDE.projects = new RIDE.ProjectsCollection
     RIDE.projects.bind 'all', @render
     RIDE.projects.bind 'add', @addOne
