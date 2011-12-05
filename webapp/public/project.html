@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html><head>
-    <title>ROS IDE</title>
-    <script type="text/javascript" src="/packages/common.js"></script>
-    <script type="text/javascript" src="/packages/project.js"></script>
-		<link rel="stylesheet" type="text/css" href="/packages/common-datauri.css">
-		<link rel="stylesheet" type="text/css" href="/packages/project-datauri.css">
-	
-</head><body>
-	<!-- an iframe is necessary unfortunately because of how browser scrollbars
-	interact with the canvas that draws the links between nodes -->
-	<div class="nodeview"><iframe src="/nodeview.html"></iframe></div>
-</body></html>
+<html>
+    <head>
+        <title>ROS IDE</title>
+        <script type="text/javascript" src="/packages/common.js"></script>
+        <script type="text/javascript" src="/packages/bootstrap.js"></script>
+        <script type="text/javascript" src="/packages/project.js"></script>
+        <link rel="stylesheet" type="text/css" href="/packages/common-datauri.css">
+        <link rel="stylesheet" type="text/css" href="/packages/bootstrap-datauri.css">
+        <link rel="stylesheet" type="text/css" href="/packages/project-datauri.css">
+    </head>
+    
+    <body>
+
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="/">RIDE</a>
+                    <ul class="nav">
+                        <li><a href="#" data-controls-modal="library-modal">Add Node</a></li>
+                        <li><a href="#">Save</a></li>
+                    </ul>
+                    <ul class="nav secondary-nav"> </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- an iframe is necessary unfortunately because of how browser scrollbars
+        interact with the canvas that draws the links between nodes -->
+        <div class="nodeview"><iframe src="/nodeview.html"></iframe></div>
+
+        <!-- Modal dialog for the node library. -->
+        <div class="modal hide fade" id="library-modal">
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3>Node Library</h3>
+            </div>
+            <div class="modal-body">
+                SLDKFJSLFDJSLDKFJSLDKJFSLDKJF
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="library-insert-btn" class="btn primary">Insert</a>
+                <a href="#" id="library-cancel-btn" class="btn secondary">Cancel</a>
+                <a href="#" id="library-new-btn" class="btn info" style="float: left">New Node...</a>
+            </div>
+        </div>
+    </body>
+</html>
