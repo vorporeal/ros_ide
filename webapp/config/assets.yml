@@ -21,11 +21,17 @@ javascripts:
   project:
     - public/lib/js/mac-hud.js
     - public/lib/js/mac-toolbar.js
+    - public/lib/js/library.js
     - public/lib/js/project.js
+
+  nodeview:
+    - public/lib/js/mac-popup.js
+    - public/lib/js/nodeview.js
 
 stylesheets:
   common:
     - public/lib/css/mac-hud.css
+    - public/lib/css/mac-button.css
     - public/lib/css/humane-jackedup.css
   
   workspace:
@@ -34,3 +40,7 @@ stylesheets:
   project:
     - public/lib/css/project.css
     - public/lib/css/mac-toolbar.css
+
+  nodeview:
+    - public/lib/css/nodeview.css
+    - public/lib/css/mac-popup.css

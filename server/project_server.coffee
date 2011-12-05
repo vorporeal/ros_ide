@@ -1,4 +1,3 @@
-dt = require './deploy_thread'
 project = require './project'
 ca = require './channel_agent'
 exec = require('child_process').exec
@@ -19,8 +18,8 @@ class ProjectServer extends ca.ChannelAgent
     @subscribe "project-#{@project.name}-node-remove", (message) => @project.removeNode(message)
     @subscribe "project-#{@project.name}-node-connect", (message) => @project.addConnection(message)
     @subscribe "project-#{@project.name}-node-disconnect", (message) => @project.removeConnection(message)
-    @subscribe "project-#{@project.name}-deploy-run", @run
-    @subscribe "project-#{@project.name}-deploy-stop", @stop
+    @subscribe "project-#{@project.name}-run", @run
+    @subscribe "project-#{@project.name}-stop", @stop
     @subscribe "project-#{@project.name}-save", => 
       exec "../commandlets/ride2ros/ride2ros.py #{@project.project_file_path} #{@project.path}", [], (error, stdout, stderr) =>
         launch_path = path.join(@project.path, @project.name + '.launch')
@@ -28,12 +27,11 @@ class ProjectServer extends ca.ChannelAgent
     
     
   run: (json) ->
+    # This doesn't work, btw.
     @stop()
-    @deploy_thread = new dt.DeployThread(json['ip'], json['user'], json['pass'], @project)
-    @deploy_thread.start()
   
   stop: ->
+    # Neither does this.
     @deploy_thread?.kill()
-    delete @deploy_thread
     
 exports.ProjectServer = ProjectServer
