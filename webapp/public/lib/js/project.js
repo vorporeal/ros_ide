@@ -1,14 +1,17 @@
-$(window).load(function() {
-    // Get the editor component from the iframe.
-    var editor = $('iframe')[0].contentWindow.editor;
-    $('iframe').focus();
+RIDE.projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
 
-	// Tell the editor which project to load.
-	var projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
-	editor.setProjectName(projectName);
+function iframeLoaded()
+{
+    // Get the editor component from the iframe.
+    RIDE.editor = $('iframe')[0].contentWindow.RIDE.editor;
+    $('iframe').focus();
+    RIDE.editor.setProjectName(RIDE.projectName);
+}
+
+$(window).load(function() {
 
     // Put project name in navigation bar.
-    $('.secondary-nav').append("<li><a>" + projectName + "</a></li>");
+    $('.secondary-nav').append("<li><a>" + RIDE.projectName + "</a></li>");
 
     // Set up the library modal dialog.
     $('#library-modal').modal({backdrop: true, keyboard: true});
@@ -22,7 +25,7 @@ $(window).load(function() {
     });
 
     // Process events related to "saving" the project (ride2ros).
-    channel('project-' + projectName + '-save-status').subscribe(function(err) {
+    channel('project-' + RIDE.projectName + '-save-status').subscribe(function(err) {
         if(err)
             humane.error(err);
         else
@@ -32,7 +35,7 @@ $(window).load(function() {
     $('#nav-save-btn').click(function() {
         humane.forceNew = true;
         humane.log('saving...');
-        channel('project-' + projectName + '-save').publish({});
+        channel('project-' + RIDE.projectName + '-save').publish({});
     });
 });
 
