@@ -14,9 +14,9 @@ class RIDE.Rect
 		              e.innerWidth(),
 		              e.innerHeight()
 		              )
-		              
-	contains: (x, y) ->
-	  x >= @left && x < @right && y >= @top && y < @bottom
-
+		              	              
+  contains: (x, y) ->
+    x >= @left && x < @right && y >= @top && y < @bottom
+    
   intersects: (rect) ->
     @right > rect.left && rect.right > @left && @bottom > rect.top && rect.bottom > @top

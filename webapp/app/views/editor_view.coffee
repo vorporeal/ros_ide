@@ -1,6 +1,6 @@
 class RIDE.EditorView extends Backbone.View
   
-  el: $('#canvas')
+  el: $('div#editor-view')
   
   events:
     "mousedown": "mousePressed"
@@ -8,8 +8,8 @@ class RIDE.EditorView extends Backbone.View
     "mouseup":   "mouseReleased"
 
   initialize: ->
-    @el = @el[0]
-    @context = @el.getContext('2d')
+    @canvas = @$("#canvas")[0]
+    @context = @canvas.getContext('2d')
     @doc = new RIDE.Document
     @doc.bind "all", @render
     @doc.bind 'add', @nodeAdded
@@ -31,19 +31,22 @@ class RIDE.EditorView extends Backbone.View
           bx = input.rect.left-8
           b_y = input.rect.centerY
           RIDE.drawLink(@context, ax, ay, bx, b_y)
+      null
+    this
           
   render: =>
     minSize = @getMinSize()
-    @el.width = minSize.width
-    @el.height = minSize.height
+    @canvas.width = minSize.width;
+    @canvas.height = minSize.height;
     @context.save()
-    @context.clearRect(0, 0, @el.width, @el.height)
-    @drawLinks()
+    @context.clearRect(0, 0, @canvas.width, @canvas.height)
+    @drawLinks();
     @context.restore()
     this
     
   nodeAdded: (node) =>
-    $('body').append(new RIDE.NodeView({model: node}).render().el)
+    $(@el).append(new RIDE.NodeView({model: node}).render().el)
+    node.view.updateRects()
     
   nodesReset: =>
     @doc.get('nodes').each(@nodeAdded)

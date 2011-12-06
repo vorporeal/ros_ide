@@ -35,7 +35,7 @@ class RIDE.UndoStack
       @currentIndex++;
     else
       commands = _.last(@batches).commands
-      if commands.length > 0 && _.last(@commands).mergeWith(command)
+      if commands.length > 0 && _.last(commands).mergeWith(command)
         return
       commands.push(command)
       

@@ -5,7 +5,7 @@ class RIDE.SelectionTool
     @startY = 0;
     @element = document.createElement('div')
     @element.className = 'selectionbox'
-    document.body.appendChild(@element)
+    $("#editor-view").append(@element)
     
   updateElement: (endX, endY) ->
     left = Math.min(@startX, endX)

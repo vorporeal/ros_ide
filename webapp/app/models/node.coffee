@@ -13,8 +13,6 @@ class RIDE.Node extends Backbone.Model
     
     if attributes?
       @parse(attributes)
-      
-    @view = new RIDE.NodeView({model: this})
     
   parse: (json) ->
     @x = json.x
@@ -43,4 +41,4 @@ class RIDE.Node extends Backbone.Model
     # Only send the property that changed, not the whole node
   	json = { id: @id }
   	json[k] = v for k,v of @changedAttributes()
-  	channel("project-#{projectName}-node-update").publish(json)
+  	channel("project-#{RIDE.projectName}-node-update").publish(json);

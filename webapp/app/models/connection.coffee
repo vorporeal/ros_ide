@@ -4,6 +4,7 @@ class RIDE.Connection extends Backbone.Model
     @name = ''
     @id = ''
     @connections = []
+    @rect = null
     
   parse: (json) ->
     @name = json.name
