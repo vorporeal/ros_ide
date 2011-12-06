@@ -9,6 +9,7 @@ class RIDE.NodeView extends Backbone.View
     @editRect = null;
     @model.view = this
     @model.bind 'change', @render
+    @model.bind 'move', @render
     
   render: =>
     $(@el).html JST.node(@model.toJSON())

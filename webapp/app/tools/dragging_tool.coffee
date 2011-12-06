@@ -50,7 +50,9 @@ class RIDE.DraggingTool
     for i in [0...(@sel.length)]
       node = @sel[i]
       pos = @positions[i]
-      node.set {x: pos.x + x - @startX, y: pos.y + y - @startY }
+      node.set {x: pos.x + x - @startX, y: pos.y + y - @startY }, {silent: true}
+      node.trigger 'move'
+    @doc.trigger 'change'
     this
     
   mouseReleased: (x, y) ->

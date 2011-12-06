@@ -148,8 +148,7 @@ class RIDE.EditorView extends Backbone.View
       unless @gotNodes
         @onSetNodesMessage json
         @gotNodes = true
-        clearInterval(interval)
-    interval = setInterval((=> channel("project-#{@projectName}-nodes-request").publish({})), 100)
+    @interval = setTimeout((=> channel("project-#{@projectName}-nodes-request").publish({})), 100)
 
 RIDE.findInputAndOutput = (nodes, json) ->
 	input = null
