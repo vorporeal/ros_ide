@@ -6,9 +6,15 @@
 </table>
 <table>
 	<tr>
-		<td class="inputs">
+		<td>
+            <% _.each(inputs, function(input, idx) { %>
+                <div class="input"><div class="bullet" id="node<%= id %>-input<%= idx %>"><div></div></div>&nbsp;<%- input.name %></div>
+            <% }); %>
 		</td>
-		<td class="outputs">
+		<td>
+            <% _.each(outputs, function(output, idx) { %>
+                <div class="output"><%- output.name %>&nbsp;<div class="bullet" id="node<%= id %>-output<%= idx %>"><div></div></div></div>
+            <% }); %>
 		</td>
 	</tr>
 </table>

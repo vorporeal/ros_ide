@@ -42,13 +42,13 @@ class RIDE.WorkspaceView extends Backbone.View
   newProject: ->
     name = window.prompt('Please enter the name of your new project')
     if name?
-      if /^\W+$/.test(name) 
+      if /^\W+$/.test(name)
         channel('workspace-list-add').publish {'name': name}
       else
         humane.error "The name '#{name}' is invalid"
 
   introspectProject: ->
-    channel('introspect-nodes-resp').subscribe (data) -> 
+    channel('introspect-nodes-resp').subscribe (data) ->
       window.location = '/project/introspect'
     channel('introspect-nodes').publish()
     

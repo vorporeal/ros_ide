@@ -13,6 +13,7 @@ class RIDE.NodeView extends Backbone.View
     
   render: =>
     @updateRects()
+    console.log(@model.toJSON())
     $(@el).html JST.node(@model.toJSON())
     this
     

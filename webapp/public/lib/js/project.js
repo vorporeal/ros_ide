@@ -1,5 +1,3 @@
-RIDE.projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
-
 function iframeLoaded()
 {
     // Get the editor component from the iframe.
@@ -10,8 +8,15 @@ function iframeLoaded()
 
 $(window).load(function() {
 
-    // Put project name in navigation bar.
-    $('.secondary-nav').append("<li><a>" + RIDE.projectName + "</a></li>");
+    // Set the global project name.
+    RIDE.projectName = /^\/project\/(\w+)\/?$/.exec(location.pathname)[1];
+
+    // Set up the node editor component.
+    iframeLoaded();
+
+    // Set up the dropdown menu in the navigation bar.
+    $('#nav-project-toggle').html(RIDE.projectName);
+    $('.dropdown').dropdown();
 
     // Set up the library modal dialog.
     $('#library-modal').modal({backdrop: true, keyboard: true});
@@ -35,8 +40,13 @@ $(window).load(function() {
     $('#nav-save-btn').click(function() {
         humane.forceNew = true;
         humane.log('saving...');
-        channel('project-' + RIDE.projectName + '-save').publish({});
+        window.setTimeout(function() {
+            channel('project-' + RIDE.projectName + '-save').publish({})
+        }, 1000);
     });
+
+    ////////////////
+    //
 });
 
 // Old project javascript code, shouldn't need much (if any) of this anymore.

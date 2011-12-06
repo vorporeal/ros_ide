@@ -19,16 +19,16 @@ class RIDE.Document extends Backbone.Model
   addNode: (node) -> @undoStack.push(new RIDE.AddNodeCommand(this, node))
     
   _addNode: (node) ->
-    	@get('nodes').add(node);
+    	@get('nodes').add(node)
   
   nodeAdded: (node) =>
-    channel("project-#{RIDE.projectName}-node-add").publish(node.toJSON());
+    channel("project-#{RIDE.projectName}-node-add").publish(node.toJSON())
     	
   nodeRemoved: (node) =>
-    channel("project-#{RIDE.projectName}-node-remove").publish(node.toJSON());
+    channel("project-#{RIDE.projectName}-node-remove").publish(node.toJSON())
   
   deleteSelection: ->
-    _.each(@get('selection'), (node) => @removeNode(node))  
+    _.each(@get('selection'), (node) => @removeNode(node))
     
   updateNode: (node, key, value) ->
     if node[key] != value
@@ -49,11 +49,11 @@ class RIDE.Document extends Backbone.Model
     
   addConnection: (input, output) ->
     unless _.detect(input.connections, output)
-        @undoStack.push(new RIDE.AddConnectionCommand(this, input, output))  
+        @undoStack.push(new RIDE.AddConnectionCommand(this, input, output))
         
   _addConnection: (input, output) ->
     input.connectTo(output)
-    channel("project-#{projectName}-node-connect").publish({ input: input.id,	output: output.id	});
+    channel("project-#{projectName}-node-connect").publish({ input: input.id,	output: output.id	})
     
   removeConnection: (input, output) ->
     if _.detect(input.connections, output)
@@ -61,7 +61,7 @@ class RIDE.Document extends Backbone.Model
       
   _removeConnection: (input, output) ->
     input.disconnectFrom(output)
-    channel("project-#{projectName}-node-disconnect").publish({ input: input.id,	output: output.id	});
+    channel("project-#{projectName}-node-disconnect").publish({ input: input.id,	output: output.id	})
     
   setSelection: (sel) ->
     different = false

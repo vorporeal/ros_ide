@@ -34,11 +34,11 @@ class RIDE.EditorView extends Backbone.View
           
   render: =>
     minSize = @getMinSize()
-    @el.width = minSize.width;
-    @el.height = minSize.height;
+    @el.width = minSize.width
+    @el.height = minSize.height
     @context.save()
     @context.clearRect(0, 0, @el.width, @el.height)
-    @drawLinks();
+    @drawLinks()
     @context.restore()
     this
     
@@ -115,7 +115,7 @@ class RIDE.EditorView extends Backbone.View
   onRemoveConnectionMessage: (json) ->
     info = findInputAndOutput(@doc.get('nodes'), json)
     if info.input && info.output
-      @doc.removeConnection(info.input, info.output);
+      @doc.removeConnection(info.input, info.output)
   		
   onUpdateNodeMessage: (json) ->
     node = @doc.get('nodes').find((n) -> n.id == json.id)
@@ -134,7 +134,7 @@ class RIDE.EditorView extends Backbone.View
     channel("project-#{@projectName}-node-disconnect").subscribe (json) => @onRemoveConnectionMessage(json)
     
     # subscribe to node updates
-    updateChannel = channel("project-#{@projectName}-node-update");
+    updateChannel = channel("project-#{@projectName}-node-update")
     updateChannel.subscribe (json) =>
       updateChannel.disable()
       @onUpdateNodeMessage json
