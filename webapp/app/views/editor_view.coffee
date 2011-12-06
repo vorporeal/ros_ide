@@ -31,6 +31,8 @@ class RIDE.EditorView extends Backbone.View
           bx = input.rect.left-8
           b_y = input.rect.centerY
           RIDE.drawLink(@context, ax, ay, bx, b_y)
+      null
+    this
           
   render: =>
     minSize = @getMinSize()

@@ -97,6 +97,8 @@ class RIDE.Document extends Backbone.Model
       (input.connectTo(connections[id]) for id in input._json_ids) for input in node.inputs
       (output.connectTo(connections[id]) for id in output._json_ids) for output in node.outputs
       
+    @trigger 'all'
+      
       
   toJSON: ->
     { nodes: @get('nodes').map((node) -> node.toJSON())}
