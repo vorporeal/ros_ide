@@ -11,7 +11,7 @@ class RIDE.DraggingTool
     
     draggingExistingSelection = false
     for selection in @sel
-      if selection.rect.contain(x, y)
+      if selection.view.rect.contains(x, y)
         draggingExistingSelection = true
         break
         
@@ -28,8 +28,8 @@ class RIDE.DraggingTool
       
     @minX = Number.MAX_VALUE
     @minY = Number.MAX_VALUE
-    for selection in @sel
-      rect = selection.rect
+    for node in @sel
+      rect = node.view.rect
       @minX = Math.min(@minX, rect.left)
       @minY = Math.min(@minY, rect.top)
 
@@ -38,7 +38,7 @@ class RIDE.DraggingTool
 
     @startX = x;
     @startY = y;
-    @positions = [{x: selection.x, y: selection.y} for selection in @sel]
+    @positions = _.map(@sel, (node) -> {x: node.get('x'), y: node.get('y')} )
 
     # We might not have gotten a mouseup, so end any previous operation now
     @doc.undoStack.endAllBatches();
@@ -50,8 +50,8 @@ class RIDE.DraggingTool
     for i in [0...(@sel.length)]
       node = @sel[i]
       pos = @positions[i]
-      node.set 'x', pos.x + x - @startX
-      node.set 'y', pos.y + y - @startY
+      node.set {x: pos.x + x - @startX, y: pos.y + y - @startY }
+    this
     
   mouseReleased: (x, y) ->
     x = Math.max(x, @minX)
@@ -60,6 +60,5 @@ class RIDE.DraggingTool
     for i in [0...(@sel.length)]
       node = @sel[i]
       pos = @positions[i]
-      node.set 'x', pos.x
-      node.set 'y', pos.y
+      node.set {x: pos.x + x - @startX, y: pos.y + y - @startY }
     @doc.undoStack.endBatch();

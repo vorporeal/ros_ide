@@ -4,6 +4,7 @@ class RIDE.Connection extends Backbone.Model
     @name = ''
     @id = ''
     @connections = []
+    @rect = null
     
   parse: (json) ->
     @name = json.name
@@ -22,7 +23,7 @@ class RIDE.Connection extends Backbone.Model
       console.log "Attempted to connect to undefined node"
       return
     
-    @connections.push @other unless other in @connections
+    @connections.push other unless other in @connections
     other.connections.push this unless this in other.connections
 
   disconnectFrom: (other) ->

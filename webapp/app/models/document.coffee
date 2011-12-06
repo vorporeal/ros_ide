@@ -79,8 +79,8 @@ class RIDE.Document extends Backbone.Model
       @undoStack.push(new RIDE.SetSelectionCommand(this, sel))
       
   _setSelection: (sel) ->
-    @get('nodes').each (node) -> node?.view?.el.className('node')
-    _.each(sel, (node) -> ode?.view?.el.className('selected node'))
+    @get('nodes').each (node) -> node?.view?.el.className = 'node'
+    _.each(sel, (node) -> node?.view?.el.className = 'selected node')
     @set({selection: sel})
       
   
@@ -93,6 +93,7 @@ class RIDE.Document extends Backbone.Model
       connections[input.id] = input for input in node.inputs
       connections[output.id] = output for output in node.outputs
       
+    @get('nodes').each (node) ->
       (input.connectTo(connections[id]) for id in input._json_ids) for input in node.inputs
       (output.connectTo(connections[id]) for id in output._json_ids) for output in node.outputs
       
