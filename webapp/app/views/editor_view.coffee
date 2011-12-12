@@ -116,7 +116,7 @@ class RIDE.EditorView extends Backbone.View
       @doc.addConnection(info.input, info.output)
     		
   onRemoveConnectionMessage: (json) ->
-    info = findInputAndOutput(@doc.get('nodes'), json)
+    info = RIDE.findInputAndOutput(@doc.get('nodes'), json)
     if info.input && info.output
       @doc.removeConnection(info.input, info.output)
   		

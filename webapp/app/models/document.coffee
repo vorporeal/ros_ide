@@ -53,14 +53,16 @@ class RIDE.Document extends Backbone.Model
         
   _addConnection: (input, output) ->
     input.connectTo(output)
+    @notify 'change'
     channel("project-#{RIDE.projectName}-node-connect").publish({ input: input.id,	output: output.id	})
     
   removeConnection: (input, output) ->
-    if _.detect(input.connections, output)
+    if _.detect(input.connections, (connection) -> connection.id == output.id)
       @undoStack.push(new RIDE.RemoveConnectionCommand(this, input, output))
       
   _removeConnection: (input, output) ->
     input.disconnectFrom(output)
+    @notify 'change'
     channel("project-#{RIDE.projectName}-node-disconnect").publish({ input: input.id,	output: output.id	})
     
   setSelection: (sel) ->
