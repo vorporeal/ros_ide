@@ -48,12 +48,12 @@ class RIDE.Document extends Backbone.Model
     @get('nodes').remove(node)
     
   addConnection: (input, output) ->
-    unless _.detect(input.connections, output)
+    unless _.detect(input.connections, (connection) -> connection.id == output.id)
         @undoStack.push(new RIDE.AddConnectionCommand(this, input, output))
         
   _addConnection: (input, output) ->
     input.connectTo(output)
-    channel("project-#{projectName}-node-connect").publish({ input: input.id,	output: output.id	})
+    channel("project-#{RIDE.projectName}-node-connect").publish({ input: input.id,	output: output.id	})
     
   removeConnection: (input, output) ->
     if _.detect(input.connections, output)
@@ -61,7 +61,7 @@ class RIDE.Document extends Backbone.Model
       
   _removeConnection: (input, output) ->
     input.disconnectFrom(output)
-    channel("project-#{projectName}-node-disconnect").publish({ input: input.id,	output: output.id	})
+    channel("project-#{RIDE.projectName}-node-disconnect").publish({ input: input.id,	output: output.id	})
     
   setSelection: (sel) ->
     different = false

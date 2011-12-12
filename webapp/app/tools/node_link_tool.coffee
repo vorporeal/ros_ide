@@ -5,7 +5,7 @@ class RIDE.NodeLinkTool
     @element = document.createElement('canvas')
     @element.className = 'nodelink'
     @c = @element.getContext('2d')
-    document.body.appendChild(@element)
+    $("#editor-view").append(@element)
   
   updateElement: (x, y) ->
     input = @getInputFromPoint(x, y)
@@ -28,21 +28,22 @@ class RIDE.NodeLinkTool
     ax = startX - left
     ay = startY - top
     bx = endX - left
-    b_y = endY - top;
-    offset = 100;
+    b_y = endY - top
+    offset = 100
 
-    RIDE.drawLink(@c, ax, ay, bx, b_y);
+    RIDE.drawLink(@c, ax, ay, bx, b_y)
   	
   getInputFromPoint: (x, y) ->
+    input = null
     @doc.get('nodes').each (node) ->
-      return _.find(node.inputs, (input) -> input.rect.contains(x,y))
-    null
-    
+      input ||= _.find(node.inputs, (input) -> input.rect.contains(x,y))
+    return input
+
   getOutputFromPoint: (x, y) ->
+    output = null
     @doc.get('nodes').each (node) ->
-      return _.find(node.outputs, (output) -> output.rect.contains(x,y))
-    null
-        
+      output ||= _.find(node.outputs, (output) -> output.rect.contains(x,y))
+    return output
         
   mousePressed: (x, y) ->
     @output = @getOutputFromPoint(x, y)

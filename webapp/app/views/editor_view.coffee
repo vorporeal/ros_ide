@@ -111,7 +111,7 @@ class RIDE.EditorView extends Backbone.View
     @doc.parse(json)
     
   onAddConnectionMessage: (json) ->
-    info = RIDE.findInputAndOutput(@doc.getNodes(), json)
+    info = RIDE.findInputAndOutput(@doc.get('nodes'), json)
     if info.input && info.output
       @doc.addConnection(info.input, info.output)
     		
@@ -154,7 +154,7 @@ RIDE.findInputAndOutput = (nodes, json) ->
 	input = null
 	output = null
 	nodes.each (node) ->
-	  input = i for i in node.inputs if i.id == json.input
-	  output = o for o in node.outputs if o.id == json.output
+	  input = _.find(node.inputs, (i) -> i.id == json.input)
+	  output = _.find(node.outputs, (o) -> o.id == json.output)
 
 	return { input: input, output: output	}
