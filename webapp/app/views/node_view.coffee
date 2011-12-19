@@ -1,8 +1,10 @@
 class RIDE.NodeView extends Backbone.View
   tagName: 'div'
   className: 'node'
-  
-  
+
+  events:
+    "click .edit-link": "editNode"
+
   initialize: (args) ->
     @template = JST.node
     @rect = null;
@@ -10,7 +12,7 @@ class RIDE.NodeView extends Backbone.View
     @model.view = this
     @model.bind 'change', @render
     @model.bind 'move', @render
-    
+
   render: =>
     $(@el).html JST.node(@model.toJSON())
     _.each(@model.inputs, (input, i) => input.el = @$("#node#{@model.id}-input#{i}"))
@@ -21,9 +23,12 @@ class RIDE.NodeView extends Backbone.View
   updateRects: ->
     $(@el)[0].style.left = "#{@model.get('x')}px"
     $(@el)[0].style.top = "#{@model.get('y')}px"
-    
+
     @rect = new RIDE.Rect().getFromElement(@el, true)
-    
+
     input.rect = new RIDE.Rect().getFromElement(input.el, false) for input in @model.inputs
     output.rect = new RIDE.Rect().getFromElement(output.el, false) for output in @model.outputs
     this
+
+  editNode: =>
+    @model.editSource()

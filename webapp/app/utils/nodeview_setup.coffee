@@ -1,6 +1,6 @@
 $ ->
   RIDE.editor = new RIDE.EditorView(new RIDE.Document())
-  
+
   focusCount = 0
   $('input').live('focus', ->  focusCount++ );
   $('input').live('blur', -> focusCount-- );
@@ -11,9 +11,9 @@ $ ->
       return
 
     if (e.ctrlKey || e.metaKey) && e.which == 'Z'.charCodeAt(0)
-      if (e.shiftKey) 
+      if (e.shiftKey)
         RIDE.editor.redo()
-      else 
+      else
         RIDE.editor.undo()
       e.preventDefault()
     else if (e.ctrlKey || e.metaKey) && e.which == 'A'.charCodeAt(0)
@@ -24,5 +24,5 @@ $ ->
       e.preventDefault();
 
   $(window).resize( ->	RIDE.editor.render())
-  
+
   parent.iframeLoaded();

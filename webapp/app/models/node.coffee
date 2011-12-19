@@ -8,12 +8,12 @@ class RIDE.Node extends Backbone.Model
     @inputs = []
     @outputs = []
     @extras = null
-    
+
     @bind 'change', @publishChange
-    
+
     if attributes?
       @parse(attributes)
-    
+
   parse: (json) ->
     @x = json.x
     @y = json.y
@@ -24,7 +24,7 @@ class RIDE.Node extends Backbone.Model
     @extras = {}
     @extras[k] = ((v unless k of this) for k,v of json)
     this
-  	
+
   toJSON: ->
     json =
       x: @x
@@ -33,12 +33,15 @@ class RIDE.Node extends Backbone.Model
       name: @name
       inputs: _.map( @inputs, (input) -> input.toJSON() )
       outputs: _.map( @outputs, (output) -> output.toJSON() )
-    
+
     json[k] = v for k,v of @extras
     return json
-   
+
   publishChange: =>
     # Only send the property that changed, not the whole node
-  	json = { id: @id }
-  	json[k] = v for k,v of @changedAttributes()
-  	channel("project-#{RIDE.projectName}-node-update").publish(json)
+    json = { id: @id }
+    json[k] = v for k,v of @changedAttributes()
+    channel("project-#{RIDE.projectName}-node-update").publish(json)
+
+  editSource: ->
+    window.location.href = "/codeview.html?id=#{@id}"

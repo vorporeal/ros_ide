@@ -1,28 +1,27 @@
 window.RIDE = {}
 
 class RIDE.Project extends Backbone.Model
-  
 
 class RIDE.ProjectsCollection extends Backbone.Collection
   model: RIDE.Project
 
 class RIDE.ProjectView extends Backbone.View
   template: _.template('<div class="project"><span class="project-link"><a href="/project/<%= name %>"><%= name %></a></span></div>')
-    
+
   render: =>
     $(@el).html @template({'name': @model.get('name')})
     this
 
 class RIDE.WorkspaceView extends Backbone.View
-  
+
   el: $('#workspace')
-  
-  events: 
+
+  events:
     "click .newproject": "newProject"
     "click .introspect": "introspectProject"
 
   initialize: ->
-    @template = JST.workspace 
+    @template = JST.workspace
     RIDE.projects = new RIDE.ProjectsCollection
     RIDE.projects.bind 'all', @render
     RIDE.projects.bind 'add', @addOne
@@ -51,12 +50,12 @@ class RIDE.WorkspaceView extends Backbone.View
     channel('introspect-nodes-resp').subscribe (data) ->
       window.location = '/project/introspect'
     channel('introspect-nodes').publish()
-    
+
   addOne: (project) =>
     view = new RIDE.ProjectView({model: project})
     @$('#list').append view.render().el
     true
-    
+
   addAll: =>
     @$('#list').empty()
     RIDE.projects.each(@addOne)

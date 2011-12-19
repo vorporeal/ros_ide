@@ -42,7 +42,10 @@ javascripts:
     - public/util/views/editor_view.js
     - app/views/jst/node.jst
     - public/util/utils/nodeview_setup.js
-    
+
+  codeview:
+    - public/util/utils/codeview_setup.js
+
 
 stylesheets:
   common:

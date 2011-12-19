@@ -20,7 +20,7 @@ class StaticFileServer
           response.write("404 Not Found\n")
           response.end()
           return
-        
+
         if fs.statSync(filename).isDirectory()
           filename += '/index.html'
 
@@ -30,13 +30,13 @@ class StaticFileServer
             response.write("#{err}\n")
             response.end()
             return
-          
+
           response.writeHead(200)
           response.write(file, "binary")
           response.end()
-          
+
     ).listen(port)
 
     console.log("Static file server running at\n  => http://localhost: #{port} /\nCTRL + C to shutdown")
-    
+
 exports.StaticFileServer = StaticFileServer
