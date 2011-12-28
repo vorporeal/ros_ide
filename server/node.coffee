@@ -1,6 +1,8 @@
 ca = require './channel_agent'
 util  = require('util')
 exec = require('child_process').exec
+path = require 'path'
+fs = require 'fs'
 
 class Connection
 
@@ -46,7 +48,8 @@ class Node extends ca.ChannelAgent
     @exec_mode = if options?.launch? then @EXEC_ROSLAUNCH else if options?.exec? then @EXEC_BINARY else null
     @remap = []
     @pkg = options?.pkg ? ''
-    @subscribe "node-#{@id}-edit", => @publishSource();
+    @path = ''
+    @subscribe "node-#{@id}-edit", => @publishSource()
 
   update: (values) ->
     if values.x? then @x = values.x
@@ -73,11 +76,12 @@ class Node extends ca.ChannelAgent
       d['exec'] = @exec_name
     return d
 
+  setPath: (project_path) ->
+    @path = path.join(project_path, @exec_name)
+
   publishSource: ->
-    @publish "node-source", {name: @exec_name, source: "def\n
-      \tthis is some python
-    "}
-    # cat = exec "roscd #{@pkg} && cat bin/#{@exec_name}", (error, stdout, stderr) =>
-    #       @publish "node-#{@id}-source", {source: stdout}
+    fs.readFile @path, 'utf-8', (err, data) =>
+      if !err
+        @publish "node-source", {name: @exec_name, source: data}
 
 exports.Node=Node

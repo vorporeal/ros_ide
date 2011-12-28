@@ -10,19 +10,22 @@ class Project extends ca.ChannelAgent
     super(message_server)
     @message_server = message_server
     @name = path.basename(_path)
-    @setPath(_path)
     @nodes = []
+    @setPath(_path)
     @load()
 
   setPath: (p) ->
     @path = p
     @project_file_path = path.join(@path, 'project.json')
+    for node in @nodes
+      node.setPath(@path)
 
   addNode: (new_node) ->
-    new_node = new node.Node(new_node) unless new_node.constructor.toString().match('Node')
+    new_node = new node.Node(new_node, @message_server) unless new_node.constructor.toString().match('Node')
     for n in @nodes
       if n.id == new_node.id
         return
+    new_node.setPath(@path)
     @nodes.push(new_node)
     @save()
 
@@ -67,7 +70,8 @@ class Project extends ca.ChannelAgent
 
   load: ->
     json = JSON.parse(fs.readFileSync(@project_file_path))
-    @nodes = ( new node.Node(n, @message_server) for n in json['nodes'] )
+    for node in json['nodes']
+      @addNode(node)
     @removeInvalidConnections()
     @save()
 

@@ -1,17 +1,18 @@
 $ ->
+  window.editor = ace.edit("node-source-editor")
+
+  editor.setTheme('ace/theme/clouds')
+  editor.renderer.setShowPrintMargin(false)
+  editor.renderer.setHScrollBarAlwaysVisible(false)
+  editor.setHighlightActiveLine(false)
+  editor.setReadOnly(false)
+
+  PythonMode = require('ace/mode/python').Mode
+  editor.getSession().setMode(new PythonMode())
+
   channel("node-source").subscribe (data) ->
 
     $("#editor-modal-title").html(data.name)
-    $("#node-source-editor").html(data.source)
-
-    editor = ace.edit("node-source-editor")
-
-    editor.setTheme('ace/theme/twilight')
-    editor.renderer.setShowPrintMargin(false)
-    editor.renderer.setHScrollBarAlwaysVisible(false)
-    editor.setHighlightActiveLine(false)
-
-    PythonMode = require('ace/mode/python').Mode
-    editor.getSession().setMode(new PythonMode())
+    window.editor.getSession().setValue(data.source)
 
     $("#editor-modal").modal()
