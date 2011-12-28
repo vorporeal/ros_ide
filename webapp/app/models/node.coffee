@@ -48,4 +48,5 @@ class RIDE.Node extends Backbone.Model
     channel("project-#{RIDE.projectName}-node-update").publish(json)
 
   editSource: ->
-    window.location.href = "/codeview.html?id=#{@id}"
+    channel("node-#{@id}-edit").publish({})
+    this

@@ -74,7 +74,7 @@ class Node extends ca.ChannelAgent
     return d
 
   publishSource: ->
-    @publish "node-#{@id}-source", {source: "def\n
+    @publish "node-source", {name: @exec_name, source: "def\n
       \tthis is some python
     "}
     # cat = exec "roscd #{@pkg} && cat bin/#{@exec_name}", (error, stdout, stderr) =>

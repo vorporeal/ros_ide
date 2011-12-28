@@ -1,7 +1,9 @@
 <table>
 	<tr>
 		<td class="title"><%= name %></td>
-		<td class="edit-link"><span>edit</span></td>
+        <% if(pkg === "") { %>
+    		<td class="edit-link"><span>edit</span></td>
+        <% } %>
 	</tr>
 </table>
 <table>

@@ -2,12 +2,15 @@
 <html>
     <head>
         <title>ROS IDE</title>
-				<script type="text/javascript">
-					window.RIDE = {}
-				</script>
-				<script type="text/javascript" src="/packages/common.js"></script>
+
+        <script type="text/javascript">
+            window.RIDE = {}
+        </script>
+
+        <script type="text/javascript" src="/packages/common.js"></script>
         <script type="text/javascript" src="/packages/bootstrap.js"></script>
         <script type="text/javascript" src="/packages/project.js"></script>
+
         <link rel="stylesheet" type="text/css" href="/packages/common-datauri.css">
         <link rel="stylesheet" type="text/css" href="/packages/bootstrap-datauri.css">
         <link rel="stylesheet" type="text/css" href="/packages/project-datauri.css">
@@ -21,9 +24,9 @@
                     <a class="brand" href="/">RIDE</a>
                     <ul class="nav">
                         <li id="nav-library-btn">
-                            <a href="#" data-controls-modal="library-modal">Add Node</a>
+                            <a href="#" data-controls-modal="library-modal">Library</a>
                         </li>
-                        <li id="nav-save-btn"><a href="#">Save</a></li>
+                        <li id="nav-export-btn"><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav secondary-nav">
                         <li class="dropdown" data-dropdown="dropdown">
@@ -57,8 +60,30 @@
             <div class="modal-footer">
                 <a href="#" id="library-insert-btn" class="btn primary">Insert</a>
                 <a href="#" id="library-cancel-btn" class="btn secondary">Cancel</a>
-                <a href="#" id="library-new-btn" class="btn info" style="float: left">New Node...</a>
+                <a href="#" id="library-new-btn" class="btn info" style="float: left">Add Node...</a>
             </div>
         </div>
+
+        <!-- Modal dialog for the source editor component. -->
+        <div class="modal hide fade" id="editor-modal">
+            <div class="modal-header">
+                <a href="#" class="close">&times;</a>
+                <h3 id="editor-modal-title"></h3>
+            </div>
+            <div class="modal-body" id="editor-modal-body">
+                <div id="node-source-editor" style="position: relative; width: 200px; height: 300px;"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="editor-save-btn" class="btn primary">Save</a>
+                <a href="#" id="editor-cancel-btn" class="btn secondary">Discard Changes</a>
+            </div>
+        </div>
+
+        <script src="/lib/js/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/lib/js/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/lib/js/mode-python.js" type="text/javascript" charset="utf-8"></script>
+
+        <script type="text/javascript" src="/packages/codeview.js"></script>
+
     </body>
 </html>

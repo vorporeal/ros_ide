@@ -21,12 +21,20 @@ $(window).load(function() {
     // Set up the library modal dialog.
     $('#library-modal').modal({backdrop: true, keyboard: true});
 
+    // Set up the editor modal dialog.
+    $('#editor-modal').modal({backdrop: true, keyboard: true});
+
     // SET UP EVENTS
     ////////////////
 
     // Make the library close when "Cancel" is clicked.
     $('#library-cancel-btn').click(function() {
         $('#library-modal').modal('hide');
+    });
+
+    // Make the editor close when "Discard Changes" is clicked.
+    $('#editor-cancel-btn').click(function() {
+        $('#editor-modal').modal('hide');
     });
 
     // Process events related to "saving" the project (ride2ros).
@@ -37,7 +45,7 @@ $(window).load(function() {
             humane.success('roslaunch file created successfully!');
         humane.forceNew = false;
     });
-    $('#nav-save-btn').click(function() {
+    $('#nav-export-btn').click(function() {
         humane.forceNew = true;
         humane.log('saving...');
         window.setTimeout(function() {
@@ -45,10 +53,10 @@ $(window).load(function() {
         }, 1000);
     });
 
-    ////////////////
-    //
 });
 
+////////////////
+//
 // Old project javascript code, shouldn't need much (if any) of this anymore.
 /**
 
