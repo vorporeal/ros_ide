@@ -67,3 +67,9 @@ body {
     width: 100%;
     height: 400px;
 }
+
+.wide-modal {
+    top: 20%;
+    width: 800px;
+    margin: -280px 0 0 -400px;
+}
