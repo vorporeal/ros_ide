@@ -49,7 +49,8 @@ class Node extends ca.ChannelAgent
     @remap = []
     @pkg = options?.pkg ? ''
     @path = ''
-    @subscribe "node-#{@id}-edit", => @publishSource()
+    @subscribe "node-#{@id}-edit-source", => @publishSource()
+    @subscribe "node-#{@id}-save-source", (source) => @saveSource(source)
 
   update: (values) ->
     if values.x? then @x = values.x
@@ -82,6 +83,14 @@ class Node extends ca.ChannelAgent
   publishSource: ->
     fs.readFile @path, 'utf-8', (err, data) =>
       if !err
-        @publish "node-source", {name: @exec_name, source: data}
+        @publish "node-source", {id: @id, name: @exec_name, source: data}
+      else
+        # TODO: Return error to user.
+        return
+
+  saveSource: (source) ->
+    fs.writeFile @path, source, 'utf-8', (err) =>
+      # TODO: Tell the user the "exit status" of the write operation.
+      return
 
 exports.Node=Node

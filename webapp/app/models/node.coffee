@@ -48,5 +48,5 @@ class RIDE.Node extends Backbone.Model
     channel("project-#{RIDE.projectName}-node-update").publish(json)
 
   editSource: ->
-    channel("node-#{@id}-edit").publish({})
+    channel("node-#{@id}-edit-source").publish({})
     this

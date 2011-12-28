@@ -4,7 +4,7 @@ $ ->
   editor.setTheme('ace/theme/clouds')
   editor.renderer.setShowPrintMargin(false)
   editor.renderer.setHScrollBarAlwaysVisible(false)
-  editor.setHighlightActiveLine(false)
+  editor.setHighlightActiveLine(true)
   editor.setReadOnly(false)
 
   PythonMode = require('ace/mode/python').Mode
@@ -15,4 +15,8 @@ $ ->
     $("#editor-modal-title").html(data.name)
     window.editor.getSession().setValue(data.source)
 
-    $("#editor-modal").modal()
+    $("#editor-save-btn").click ->
+      channel("node-#{data.id}-save-source").publish(window.editor.getSession().getValue())
+      $("#editor-modal").modal('hide')
+
+    $("#editor-modal").modal('show')
