@@ -22,7 +22,11 @@ class RIDE.Node extends Backbone.Model
     @inputs = _.map(json.inputs, (input) => new RIDE.Connection(this).parse(input) )
     @outputs = _.map(json.outputs, (output) => new RIDE.Connection(this).parse(output) )
     @extras = {}
-    @extras[k] = ((v unless k of this) for k,v of json)
+
+    for k,v of json
+      if !(k of this)
+        @extras[k] = v
+
     this
 
   toJSON: ->
